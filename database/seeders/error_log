@@ -1,0 +1,4 @@
+[11-Oct-2021 17:32:28 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Seeder' not found in /home/jumahcno/393water.com/bamback/database/seeders/DatabaseSeeder.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/database/seeders/DatabaseSeeder.php on line 7

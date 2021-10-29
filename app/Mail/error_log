@@ -1,0 +1,12 @@
+[11-Oct-2021 17:32:18 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Mail\Mailable' not found in /home/jumahcno/393water.com/bamback/app/Mail/Passwordcreation.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Mail/Passwordcreation.php on line 10
+[11-Oct-2021 17:32:18 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Mail\Mailable' not found in /home/jumahcno/393water.com/bamback/app/Mail/Forgotpassword.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Mail/Forgotpassword.php on line 10
+[11-Oct-2021 17:32:18 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Mail\Mailable' not found in /home/jumahcno/393water.com/bamback/app/Mail/Welcomeemail.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Mail/Welcomeemail.php on line 10

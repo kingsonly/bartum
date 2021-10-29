@@ -1,0 +1,40 @@
+[11-Oct-2021 17:32:21 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/jumahcno/393water.com/bamback/app/Models/Auditrail.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Models/Auditrail.php on line 8
+[11-Oct-2021 17:32:21 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/jumahcno/393water.com/bamback/app/Models/Client.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Models/Client.php on line 8
+[11-Oct-2021 17:32:21 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/jumahcno/393water.com/bamback/app/Models/Lga.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Models/Lga.php on line 7
+[11-Oct-2021 17:32:22 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/jumahcno/393water.com/bamback/app/Models/Messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Models/Messages.php on line 8
+[11-Oct-2021 17:32:22 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/jumahcno/393water.com/bamback/app/Models/Project.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Models/Project.php on line 8
+[11-Oct-2021 17:32:22 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/jumahcno/393water.com/bamback/app/Models/Notification.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Models/Notification.php on line 8
+[11-Oct-2021 17:32:22 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/jumahcno/393water.com/bamback/app/Models/Product.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Models/Product.php on line 8
+[11-Oct-2021 17:32:22 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/jumahcno/393water.com/bamback/app/Models/Projectmessage.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Models/Projectmessage.php on line 8
+[11-Oct-2021 17:32:22 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Model' not found in /home/jumahcno/393water.com/bamback/app/Models/State.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Models/State.php on line 7
+[11-Oct-2021 17:32:22 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Auth\User' not found in /home/jumahcno/393water.com/bamback/app/Models/User.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Models/User.php on line 11

@@ -1,0 +1,16 @@
+[11-Oct-2021 17:32:03 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Route' not found in /home/jumahcno/393water.com/bamback/routes/api.php:25
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/routes/api.php on line 25
+[11-Oct-2021 17:32:03 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Artisan' not found in /home/jumahcno/393water.com/bamback/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/routes/console.php on line 17
+[11-Oct-2021 17:32:03 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Broadcast' not found in /home/jumahcno/393water.com/bamback/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/routes/channels.php on line 16
+[11-Oct-2021 17:32:03 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Support\Facades\Route' not found in /home/jumahcno/393water.com/bamback/routes/web.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/routes/web.php on line 17

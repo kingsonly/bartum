@@ -1,0 +1,44 @@
+[11-Oct-2021 17:32:29 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Migrations\Migration' not found in /home/jumahcno/393water.com/bamback/database/migrations/2014_10_12_100000_create_password_resets_table.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/database/migrations/2014_10_12_100000_create_password_resets_table.php on line 7
+[11-Oct-2021 17:32:29 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Migrations\Migration' not found in /home/jumahcno/393water.com/bamback/database/migrations/2014_10_12_000000_create_users_table.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/database/migrations/2014_10_12_000000_create_users_table.php on line 7
+[11-Oct-2021 17:32:29 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Migrations\Migration' not found in /home/jumahcno/393water.com/bamback/database/migrations/2019_08_19_000000_create_failed_jobs_table.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/database/migrations/2019_08_19_000000_create_failed_jobs_table.php on line 7
+[11-Oct-2021 17:32:29 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Migrations\Migration' not found in /home/jumahcno/393water.com/bamback/database/migrations/2019_12_14_000001_create_personal_access_tokens_table.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/database/migrations/2019_12_14_000001_create_personal_access_tokens_table.php on line 7
+[11-Oct-2021 17:32:29 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Migrations\Migration' not found in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_05_182406_create_products_table.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_05_182406_create_products_table.php on line 7
+[11-Oct-2021 17:32:29 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Migrations\Migration' not found in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_05_200714_create_clients_table.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_05_200714_create_clients_table.php on line 7
+[11-Oct-2021 17:32:29 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Migrations\Migration' not found in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_07_122246_create_projects_table.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_07_122246_create_projects_table.php on line 7
+[11-Oct-2021 17:32:30 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Migrations\Migration' not found in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_07_125500_create_notifications_table.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_07_125500_create_notifications_table.php on line 7
+[11-Oct-2021 17:32:30 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Migrations\Migration' not found in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_23_170618_create_auditrails_table.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_23_170618_create_auditrails_table.php on line 7
+[11-Oct-2021 17:32:30 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Migrations\Migration' not found in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_08_102214_create_messages_table.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_08_102214_create_messages_table.php on line 7
+[11-Oct-2021 17:32:30 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Migrations\Migration' not found in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_08_103314_create_projectmessages_table.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/database/migrations/2021_09_08_103314_create_projectmessages_table.php on line 7

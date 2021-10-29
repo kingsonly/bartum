@@ -1,0 +1,158 @@
+[05-Sep-2021 18:19:45 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/app.php on line 16
+[05-Sep-2021 18:19:51 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/broadcasting.php on line 18
+[05-Sep-2021 18:19:54 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/cache.php on line 18
+[05-Sep-2021 18:19:57 America/New_York] PHP Notice:  Undefined index: frontend in /home/jumahcno/393water.com/bamback/config/constants.php on line 6
+[05-Sep-2021 18:20:03 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/database.php on line 18
+[05-Sep-2021 18:20:07 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/filesystems.php on line 16
+[05-Sep-2021 18:20:11 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/hashing.php:32
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/hashing.php on line 32
+[05-Sep-2021 18:20:15 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/logging.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/logging.php on line 20
+[05-Sep-2021 18:20:20 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/mail.php on line 16
+[05-Sep-2021 18:20:31 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/sanctum.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/sanctum.php on line 16
+[05-Sep-2021 18:20:36 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/services.php on line 18
+[05-Sep-2021 18:20:40 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/session.php on line 21
+[05-Sep-2021 18:20:45 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/jumahcno/393water.com/bamback/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/view.php on line 17
+[05-Sep-2021 18:25:58 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/queue.php on line 16
+[05-Sep-2021 18:57:29 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/broadcasting.php on line 18
+[05-Sep-2021 18:57:33 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/cache.php on line 18
+[05-Sep-2021 18:57:36 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/database.php on line 18
+[05-Sep-2021 18:57:39 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/filesystems.php on line 16
+[05-Sep-2021 18:57:42 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/hashing.php:32
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/hashing.php on line 32
+[05-Sep-2021 18:57:45 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/logging.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/logging.php on line 20
+[05-Sep-2021 18:57:48 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/mail.php on line 16
+[05-Sep-2021 18:57:52 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/queue.php on line 16
+[05-Sep-2021 18:57:55 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/sanctum.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/sanctum.php on line 16
+[05-Sep-2021 18:57:58 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/services.php on line 18
+[05-Sep-2021 18:58:01 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/session.php on line 21
+[05-Sep-2021 18:58:04 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/jumahcno/393water.com/bamback/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/view.php on line 17
+[05-Sep-2021 18:58:29 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/app.php on line 16
+[11-Oct-2021 17:31:55 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/app.php on line 16
+[11-Oct-2021 17:31:55 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/broadcasting.php on line 18
+[11-Oct-2021 17:31:55 America/New_York] PHP Notice:  Undefined index: frontend in /home/jumahcno/393water.com/bamback/config/constants.php on line 6
+[11-Oct-2021 17:31:55 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/cache.php on line 18
+[11-Oct-2021 17:31:56 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/hashing.php:32
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/hashing.php on line 32
+[11-Oct-2021 17:31:56 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/database.php on line 18
+[11-Oct-2021 17:31:56 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/filesystems.php on line 16
+[11-Oct-2021 17:31:57 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/logging.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/logging.php on line 20
+[11-Oct-2021 17:31:57 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/queue.php on line 16
+[11-Oct-2021 17:31:57 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/mail.php on line 16
+[11-Oct-2021 17:31:57 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/sanctum.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/sanctum.php on line 16
+[11-Oct-2021 17:31:57 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/services.php on line 18
+[11-Oct-2021 17:31:57 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/jumahcno/393water.com/bamback/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/session.php on line 21
+[11-Oct-2021 17:31:57 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/jumahcno/393water.com/bamback/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/config/view.php on line 17
