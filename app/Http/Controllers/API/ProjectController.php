@@ -16,6 +16,9 @@ use App\Models\Client;
 use App\Models\Project;
 use DB;
 use App\Models\Auditrail;
+use App\Models\Item;
+use App\Models\Subitem;
+use App\Models\Stockaddition;
 
 
 class ProjectController extends Controller
@@ -47,10 +50,10 @@ class ProjectController extends Controller
         }
 
         $validator = Validator::make($request->all(),[
-            'numberofbatteries' => 'required',
+            'numberofbatteries' => 'required|integer|min:0',
         ]);
         if($validator->fails()){
-        return response()->json(['status' => 'error' , 'message'=>'numberofbatteries  is required' , 'data'=>''],400);
+        return response()->json(['status' => 'error' , 'message'=>'numberofbatteries  is required, must be a number' , 'data'=>''],400);
         }
 
         $validator = Validator::make($request->all(),[
@@ -96,6 +99,42 @@ class ProjectController extends Controller
         return response()->json(['status' => 'error' , 'message'=>'Price  is required' , 'data'=>''],400);
         }
 
+        $validator = Validator::make($request->all(),[
+            'numberofinverters' => 'required|integer|min:0',
+        ]);
+        if($validator->fails()){
+        return response()->json(['status' => 'error' , 'message'=>'numberofinverters  is required, must be a number' , 'data'=>''],400);
+        }
+
+        $validator = Validator::make($request->all(),[
+            'numberofpanels' => 'required|integer|min:0',
+        ]);
+        if($validator->fails()){
+        return response()->json(['status' => 'error' , 'message'=>'numberofpanels  is required, must be a number' , 'data'=>''],400);
+        }
+
+        $validator = Validator::make($request->all(),[
+            'batterytypeid' => 'required|integer|min:1',
+        ]);
+        if($validator->fails()){
+        return response()->json(['status' => 'error' , 'message'=>'batterytypeid  is required' , 'data'=>''],400);
+        }
+
+        $validator = Validator::make($request->all(),[
+            'invertertypeid' => 'required|integer|min:1',
+        ]);
+        if($validator->fails()){
+        return response()->json(['status' => 'error' , 'message'=>'invertertypeid  is required' , 'data'=>''],400);
+        }
+
+        $validator = Validator::make($request->all(),[
+            'solarpaneltypeid' => 'required|integer|min:1',
+        ]);
+        if($validator->fails()){
+        return response()->json(['status' => 'error' , 'message'=>'solarpaneltypeid  is required' , 'data'=>''],400);
+        }
+
+
         $lga = $lga2 = Lga::where('lgaid',$request->input('lgaid'))->first();
 
         if($lga == null)
@@ -109,6 +148,29 @@ class ProjectController extends Controller
         {
             return response()->json(['status' => 'error' , 'message'=>'Client is not found' , 'data'=>''],400);
         }
+
+        $batterytype = Subitem::where('id', $request->input('batterytypeid'))->first();
+        if($request->input('numberofbatteries') > $batterytype->quantity)
+        {
+          $message = $batterytype->name. " has only". $batterytype->quantity ." left";
+          return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+        }
+
+        $solarpaneltype = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
+        if($request->input('numberofpanels') > $solarpaneltype->quantity)
+        {
+          $message = $solarpaneltype->name. " has only". $solarpaneltype->quantity ." left";
+          return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+        }
+
+
+        $invertertype = Subitem::where('id', $request->input('invertertypeid'))->first();
+        if($request->input('numberofinverters') > $invertertype->quantity)
+        {
+          $message = $invertertype->name. " has only". $invertertype->quantity ." left";
+          return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+        }
+
 
         $lga = $lga->lganame;
 
@@ -139,9 +201,62 @@ class ProjectController extends Controller
         $client  =  Client::where('id',$request->clientid)->first();
         $project->clientuserid =  $client->userid;
         $project->addedby =  $id;
+        $project->numberofinverters =  $request->input('numberofinverters');
+        $project->batterytypeid =  $request->input('batterytypeid');
+        $project->invertertypeid =  $request->input('invertertypeid');
+        $project->solarpaneltypeid =  $request->input('solarpaneltypeid');
+
         if($project->save())
         {
-            return response()->json(['status'=>'success', 'message'=>'product saved successfully', 'data'=>$project],200);
+            $st = new Stockaddition();
+            $st->itemid = $batterytype->itemid;
+            $st->subitemid = $batterytype->id;
+            $st->quantity = $request->input('numberofbatteries');
+            $st->userid = $id;
+            $st->transactiontype = "sold";
+            $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
+            $st->projecttid = $project->id;
+            if($st->quantity > 0){
+            $st->save();
+             }
+            $batterytype->quantity = $batterytype->quantity - $request->input('numberofbatteries');
+            $batterytype->save();
+
+            $st = new Stockaddition();
+            $st->itemid = $solarpaneltype->itemid;
+            $st->subitemid = $solarpaneltype->id;
+            $st->quantity = $request->input('numberofpanels');
+            $st->userid = $id;
+            $st->transactiontype = "sold";
+            $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
+            $st->projecttid = $project->id;
+              if($st->quantity > 0){
+              $st->save();
+              }
+            $solarpaneltype->quantity = $solarpaneltype->quantity - $request->input('numberofpanels');
+            $solarpaneltype->save();
+
+            $st = new Stockaddition();
+            $st->itemid = $invertertype->itemid;
+            $st->subitemid = $invertertype->id;
+            $st->quantity = $request->input('numberofinverters');
+            $st->userid = $id;
+            $st->transactiontype = "sold";
+            $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
+            $st->projecttid = $project->id;
+            if($st->quantity > 0){
+             $st->save();
+             }
+            $invertertype->quantity = $invertertype->quantity - $request->input('numberofinverters');
+            $invertertype->save();
+
+            $statement = "Added Project  with name ". $project->projectname;
+
+            $this->logAudit($loggedinuser->email, $statement, $request->ip(), $request->server('HTTP_USER_AGENT'), $project);
+
+
+
+            return response()->json(['status'=>'success', 'message'=>'project saved successfully', 'data'=>$project],200);
         }
         else{
             return response()->json(['status'=>'error', 'message'=>'could not add project', 'data'=>''],400);
@@ -385,21 +500,14 @@ class ProjectController extends Controller
 
     public function editproject(Request $request)
     {
-
-
       $loggedinuser = auth()->guard('sanctum')->user();
       $id = $loggedinuser->id;
-      if($loggedinuser->role != 1 && $loggedinuser->role != 2)
-      {
-        return response()->json(['status'=>'error', 'message'=>'you dont have write and edit access',  'data' =>''],400);
-      }
-
 
       $validator = Validator::make($request->all(),[
           'projectname' => 'required',
       ]);
       if($validator->fails()){
-      return response()->json(['status' => 'error' , 'message'=>'projectname  is required ' , 'data'=>''],400);
+      return response()->json(['status' => 'error' , 'message'=>'projectname  is required and projectname must not repeat' , 'data'=>''],400);
       }
 
       $validator = Validator::make($request->all(),[
@@ -417,10 +525,10 @@ class ProjectController extends Controller
       }
 
       $validator = Validator::make($request->all(),[
-          'numberofbatteries' => 'required',
+          'numberofbatteries' => 'required|integer|min:0',
       ]);
       if($validator->fails()){
-      return response()->json(['status' => 'error' , 'message'=>'numberofbatteries  is required' , 'data'=>''],400);
+      return response()->json(['status' => 'error' , 'message'=>'numberofbatteries  is required, must be greater than 0' , 'data'=>''],400);
       }
 
       $validator = Validator::make($request->all(),[
@@ -466,9 +574,43 @@ class ProjectController extends Controller
       return response()->json(['status' => 'error' , 'message'=>'Price  is required' , 'data'=>''],400);
       }
 
+      $validator = Validator::make($request->all(),[
+          'numberofinverters' => 'required|integer|min:1',
+      ]);
+      if($validator->fails()){
+      return response()->json(['status' => 'error' , 'message'=>'numberofinverters  is required, must be greater than 0' , 'data'=>''],400);
+      }
 
       $validator = Validator::make($request->all(),[
-          'id' => 'required',
+          'numberofpanels' => 'required|integer|min:1',
+      ]);
+      if($validator->fails()){
+      return response()->json(['status' => 'error' , 'message'=>'numberofpanels  is required, must be greater than 0' , 'data'=>''],400);
+      }
+
+      $validator = Validator::make($request->all(),[
+          'batterytypeid' => 'required|integer|min:1',
+      ]);
+      if($validator->fails()){
+      return response()->json(['status' => 'error' , 'message'=>'batterytypeid  is required' , 'data'=>''],400);
+      }
+
+      $validator = Validator::make($request->all(),[
+          'invertertypeid' => 'required|integer|min:1',
+      ]);
+      if($validator->fails()){
+      return response()->json(['status' => 'error' , 'message'=>'invertertypeid  is required' , 'data'=>''],400);
+      }
+
+      $validator = Validator::make($request->all(),[
+          'solarpaneltypeid' => 'required|integer|min:1',
+      ]);
+      if($validator->fails()){
+      return response()->json(['status' => 'error' , 'message'=>'solarpaneltypeid  is required' , 'data'=>''],400);
+      }
+
+      $validator = Validator::make($request->all(),[
+          'id' => 'required|integer|min:1',
       ]);
       if($validator->fails()){
       return response()->json(['status' => 'error' , 'message'=>'id  is required' , 'data'=>''],400);
@@ -490,14 +632,90 @@ class ProjectController extends Controller
           return response()->json(['status' => 'error' , 'message'=>'Client is not found' , 'data'=>''],400);
       }
 
+      $oldproject = Project::where('id', $request->input('id'))->first();
+      $project = Project::where('id', $request->input('id'))->first();
+
+      $batterytype = Subitem::where('id', $request->input('batterytypeid'))->first();
+      $oldbatterytype = Subitem::where('id', $request->input('batterytypeid'))->first();
+      if($project->batterytypeid != $request->input('batterytypeid'))
+      {
+
+        if($request->input('numberofbatteries') > $batterytype->quantity)
+        {
+          $message = $batterytype->name. " has only". $batterytype->quantity ." left, so you cannot edit";
+          return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+        }
+      }
+      if($project->batterytypeid == $request->input('batterytypeid'))
+      {
+          $difference = $request->input('numberofbatteries') - $project->numberofbatteries;
+
+          if($difference > $batterytype->quantity)
+          {
+
+              $message = $batterytype->name. " has only". $batterytype->quantity ." left, so you cannot edit";
+              return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+          }
+      }
+
+
+      $solarpaneltype = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
+      $oldsolarpaneltype = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
+      if($project->solarpaneltypeid != $request->input('solarpaneltypeid'))
+      {
+
+        if($request->input('numberofpanels') > $solarpaneltype->quantity)
+        {
+          $message = $solarpaneltype->name. " has only". $solarpaneltype->quantity ." left, so you cannot edit";
+          return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+        }
+      }
+      if($project->solarpaneltypeid == $request->input('solarpaneltypeid'))
+      {
+          $difference = $request->input('numberofpanels') - $project->numberofpanels;
+
+          if($difference > $solarpaneltype->quantity)
+          {
+
+              $message = $solarpaneltype->name. " has only". $solarpaneltype->quantity ." left, so you cannot edit";
+              return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+          }
+      }
+
+
+
+            $invertertype = Subitem::where('id', $request->input('invertertypeid'))->first();
+            $oldinvertertype = Subitem::where('id', $request->input('invertertypeid'))->first();
+            if($project->invertertypeid != $request->input('invertertypeid'))
+            {
+
+              if($request->input('numberofinverters') > $invertertype->quantity)
+              {
+                $message = $invertertype->name. " has only". $invertertype->quantity ." left, so you cannot edit";
+                return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+              }
+            }
+            if($project->invertertypeid == $request->input('invertertypeid'))
+            {
+                $difference = $request->input('numberofinverters') - $project->numberofinverters;
+
+                if($difference > $invertertype->quantity)
+                {
+
+                    $message = $invertertype->name. " has only". $invertertype->quantity ." left, so you cannot edit";
+                    return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+                }
+            }
+
+
+
       $lga = $lga->lganame;
 
       $state = $state2 =  State::where('stateid', $lga2->stateid)->first();
       $state = $state->sname;
 
-      $project = new Project();
+
       $project->projectname =  $request->input('projectname');
-      $project =  $project::where('id', $request->input('id'))->first() ;
       $project->projecttype =  $request->input('projecttype');
       $project->solarsystemsize =  $request->input('solarsystemsize');
       $project->numberofpanels =  $request->input('numberofpanels');
@@ -516,23 +734,72 @@ class ProjectController extends Controller
       $project->lga =  $lga;
       $project->state =  $state;
       $project->stateid =  $state2->stateid;
-      $project->projectcode =  str_shuffle("123456789ABC");
       $client  =  Client::where('id',$request->clientid)->first();
       $project->clientuserid =  $client->userid;
-      $project->addedby =  $id;
+
+      $project->numberofinverters =  $request->input('numberofinverters');
+      $project->batterytypeid =  $request->input('batterytypeid');
+      $project->invertertypeid =  $request->input('invertertypeid');
+      $project->solarpaneltypeid =  $request->input('solarpaneltypeid');
+
       if($project->save())
       {
+        if($oldproject->batterytypeid != $request->input('batterytypeid'))
+        {
+
+        }
+        $st = new Stockaddition();
+        $st->itemid = $batterytype->itemid;
+        $st->subitemid = $batterytype->id;
+        $st->quantity = $request->input('numberofbatteries');
+        $st->userid = $id;
+        $st->transactiontype = "sold";
+        $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
+        $st->projecttid = $project->id;
+        if($st->quantity > 0){
+        $st->save();
+         }
+        $batterytype->quantity = $batterytype->quantity - $request->input('numberofbatteries');
+        $batterytype->save();
+
+        $st = new Stockaddition();
+        $st->itemid = $solarpaneltype->itemid;
+        $st->subitemid = $solarpaneltype->id;
+        $st->quantity = $request->input('numberofpanels');
+        $st->userid = $id;
+        $st->transactiontype = "sold";
+        $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
+        $st->projecttid = $project->id;
+          if($st->quantity > 0){
+          $st->save();
+          }
+        $solarpaneltype->quantity = $solarpaneltype->quantity - $request->input('numberofpanels');
+        $solarpaneltype->save();
+
+        $st = new Stockaddition();
+        $st->itemid = $invertertype->itemid;
+        $st->subitemid = $invertertype->id;
+        $st->quantity = $request->input('numberofinverters');
+        $st->userid = $id;
+        $st->transactiontype = "sold";
+        $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
+        $st->projecttid = $project->id;
+        if($st->quantity > 0){
+         $st->save();
+         }
+        $invertertype->quantity = $invertertype->quantity - $request->input('numberofinverters');
+        $invertertype->save();
+
+          $statement = "Edited Project  with name ". $project->projectname;
+          $changes =  json_encode($project->getChanges());
+          $this->logAudit($loggedinuser->email, $statement, $request->ip(), $request->server('HTTP_USER_AGENT'), $changes);
 
 
-                        $statement = "Edited Project  with name ". $project->projectname;
-                        $changes =  json_encode($project->getChanges());
-                        $changes = json_encode($changes);
-                        $this->logAudit($loggedinuser->email, $statement, $request->ip(), $request->server('HTTP_USER_AGENT'), $changes);
 
-          return response()->json(['status'=>'success', 'message'=>'product saved successfully', 'data'=>$project],200);
+          return response()->json(['status'=>'success', 'message'=>'project edited successfully', 'data'=>$project],200);
       }
       else{
-          return response()->json(['status'=>'error', 'message'=>'could not add project', 'data'=>''],400);
+          return response()->json(['status'=>'error', 'message'=>'could not edit project', 'data'=>''],400);
       }
 
     }
@@ -575,17 +842,22 @@ return response()->json(['status'=>'success', 'message'=>'project deleted succes
     }
 
 
+
+
     private function logAudit($email, $action, $ip, $useragent, $object="null")
     {
+      $datetime = new \DateTime("Africa/Lagos");
       $auditlog = new Auditrail();
       $auditlog->email = $email;
       $auditlog->action = $action;
-      $auditlog->time =  date("Y-m-d H:i:s");
+
+      $auditlog->time =  $datetime->format("Y-m-d H:i:s");
       $auditlog->ip =  $ip;
       $auditlog->useragent = $useragent;
       $auditlog->object =  $object;
       $auditlog->save();
     }
+
 
 
 

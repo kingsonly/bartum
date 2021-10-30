@@ -9,9 +9,14 @@ class Subitem extends Model
 {
     use HasFactory;
 
-    public function Item()
+public function Item()
 {
     return $this->belongsTo(Item::class, 'itemid');
+}
+
+public function Stockaddition()
+{
+    return $this->hasMany(Stockaddition::class);
 }
 
 }

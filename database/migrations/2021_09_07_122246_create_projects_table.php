@@ -33,6 +33,12 @@ class CreateProjectsTable extends Migration
             $table->string('stateid')->nullable();
             $table->decimal('price',12,2)->nullable();
             $table->string('addedby')->nullable();
+            $table->integer('numberofinverters')->nullable();
+            $table->integer('batterytypeid')->nullable();
+            $table->integer('invertertypeid')->nullable();
+            $table->integer('solarpaneltypeid')->nullable();
+
+
         });
     }
 

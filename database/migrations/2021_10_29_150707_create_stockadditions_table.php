@@ -22,6 +22,7 @@ class CreateStockadditionsTable extends Migration
             $table->integer('itemid')->nullable();
             $table->string('tracking')->nullable();
             $table->string('transactiontype')->default('addition')->comment('addition or sold');
+            $table->string('projecttid')->nullable();
         });
     }
 

@@ -9,8 +9,13 @@ class Item extends Model
 {
     use HasFactory;
 
-    public function Subitem()
-   {
-       return $this->hasMany(Subitem::class);
-   }
+     public function Subitem()
+     {
+         return $this->hasMany(Subitem::class);
+     }
+
+    public function Stockaddition()
+    {
+        return $this->hasMany(Stockaddition::class);
+    }
 }

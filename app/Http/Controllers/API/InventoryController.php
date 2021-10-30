@@ -172,9 +172,61 @@ class InventoryController extends Controller
           }
 
 
-          public function viewinventory()
+          public function viewinventory(Request $request)
           {
-            
+            $query = $request->all();
+        		if(array_key_exists('perpage', $query))
+        		{//check if perpage is in query string
+        			 $perpage = $query["perpage"];
+        		}
+        		else {
+        			$perpage = 10;
+        		}
+
+            $query = $request->all();
+        		if(array_key_exists('page', $query))
+        		{//check if page is in query string
+        			 $page = $query["page"];
+        		}
+        		else {
+        			$page = 1;
+        		}
+
+
+              $stock = Stockaddition::with('subitem', 'item',  'Addedby')->paginate($perpage)->toarray();
+              $data =   $stock["data"];
+              $page =   $stock["current_page"];
+              $totalpages = ceil($stock["total"]/$perpage);
+              return response()->json(['status'=>'success', 'message'=>'inventory fetched with pagination', 'data'=>$data, 'page'=>$page, 'totalpages'=>$totalpages, 'perpage'=>$perpage],200);
+          }
+
+
+          public function viewstockentries(Request $request)
+          {
+            $query = $request->all();
+        		if(array_key_exists('perpage', $query))
+        		{//check if perpage is in query string
+        			 $perpage = $query["perpage"];
+        		}
+        		else {
+        			$perpage = 10;
+        		}
+
+            $query = $request->all();
+        		if(array_key_exists('page', $query))
+        		{//check if page is in query string
+        			 $page = $query["page"];
+        		}
+        		else {
+        			$page = 1;
+        		}
+
+
+              $stock = Stockaddition::with('subitem',  'item', 'Addedby')->where('transactiontype','addition')->paginate($perpage)->toarray();
+              $data =   $stock["data"];
+              $page =   $stock["current_page"];
+              $totalpages = ceil($stock["total"]/$perpage);
+              return response()->json(['status'=>'success', 'message'=>'stock entry fetched with pagination', 'data'=>$data, 'page'=>$page, 'totalpages'=>$totalpages, 'perpage'=>$perpage],200);
           }
 
 
@@ -230,8 +282,6 @@ class InventoryController extends Controller
 
                 $statement = "Edited a subitem  ". $request->input('name');
                 $changes =  json_encode($subitem->getChanges());
-                //$changes = json_encode($changes);
-                //$this->logAudit($loggedinuser->email, $statement, $request->ip(), $request->server('HTTP_USER_AGENT'), $changes);
                 $this->logAudit($loggedinuser->email, $statement, $request->ip(), $request->server('HTTP_USER_AGENT'), $changes);
 
                 return response()->json(['status'=>'success', 'message'=>'subitem editted', 'data'=>$subitem],200);
@@ -295,6 +345,40 @@ class InventoryController extends Controller
             $this->logAudit($loggedinuser->email, $statement, $request->ip(), $request->server('HTTP_USER_AGENT'), $st);
 
             return response()->json(['status'=>'success', 'message'=>'stock added', 'data'=>$st],200);
+          }
+
+          public function fetchaudittrail(Request $request)
+          {
+            $query = $request->all();
+            if(array_key_exists('perpage', $query))
+            {//check if perpage is in query string
+               $perpage = $query["perpage"];
+            }
+            else {
+              $perpage = 100;
+            }
+
+            $query = $request->all();
+            if(array_key_exists('page', $query))
+            {//check if page is in query string
+               $page = $query["page"];
+            }
+            else {
+              $page = 1;
+            }
+
+            $stock = Auditrail::with('user')->paginate($perpage)->toarray();
+            $data =   $stock["data"];
+            $page =   $stock["current_page"];
+            $totalpages = ceil($stock["total"]/$perpage);
+            return response()->json(['status'=>'success', 'message'=>'audit trail fetched with pagination', 'data'=>$data, 'page'=>$page, 'totalpages'=>$totalpages, 'perpage'=>$perpage],200);
+
+          }
+
+          public function getsubitemsbyitemid($itemid)
+          {
+            $subitems = Subitem::where('itemid', $itemid)->orderby('name','asc')->get();
+            return response()->json(['status'=>'success', 'message'=>'subitems fetched', 'data'=>$subitems],200);
           }
 
 
