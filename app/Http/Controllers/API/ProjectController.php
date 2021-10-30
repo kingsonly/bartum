@@ -633,6 +633,12 @@ class ProjectController extends Controller
       }
 
       $oldproject = Project::where('id', $request->input('id'))->first();
+
+      if($oldproject == null)
+      {
+        return response()->json(['status' => 'error' , 'message'=>'project not found' , 'data'=>''],400);
+      }
+
       $project = Project::where('id', $request->input('id'))->first();
 
       $batterytype = Subitem::where('id', $request->input('batterytypeid'))->first();
@@ -659,28 +665,28 @@ class ProjectController extends Controller
       }
 
 
-      $solarpaneltype = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
-      $oldsolarpaneltype = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
-      if($project->solarpaneltypeid != $request->input('solarpaneltypeid'))
-      {
+            $solarpaneltype = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
+            $oldsolarpaneltype = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
+            if($project->solarpaneltypeid != $request->input('solarpaneltypeid'))
+            {
 
-        if($request->input('numberofpanels') > $solarpaneltype->quantity)
-        {
-          $message = $solarpaneltype->name. " has only". $solarpaneltype->quantity ." left, so you cannot edit";
-          return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
-        }
-      }
-      if($project->solarpaneltypeid == $request->input('solarpaneltypeid'))
-      {
-          $difference = $request->input('numberofpanels') - $project->numberofpanels;
+              if($request->input('numberofpanels') > $solarpaneltype->quantity)
+              {
+                $message = $solarpaneltype->name. " has only". $solarpaneltype->quantity ." left, so you cannot edit";
+                return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+              }
+            }
+            if($project->solarpaneltypeid == $request->input('solarpaneltypeid'))
+            {
+                $difference = $request->input('numberofpanels') - $project->numberofpanels;
 
-          if($difference > $solarpaneltype->quantity)
-          {
+                if($difference > $solarpaneltype->quantity)
+                {
 
-              $message = $solarpaneltype->name. " has only". $solarpaneltype->quantity ." left, so you cannot edit";
-              return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
-          }
-      }
+                    $message = $solarpaneltype->name. " has only". $solarpaneltype->quantity ." left, so you cannot edit";
+                    return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+                }
+            }
 
 
 
@@ -744,57 +750,150 @@ class ProjectController extends Controller
 
       if($project->save())
       {
-        if($oldproject->batterytypeid != $request->input('batterytypeid'))
+        if($oldproject->batterytypeid == $request->input('batterytypeid'))
         {
+            $st =  Stockaddition::where(['projecttid'=>$oldproject->id, 'subitemid'=>$oldproject->batterytypeid])->first();
+            $st->quantity = $request->input('numberofbatteries');
+            $st->save();
+
+            $diff = $request->input('numberofbatteries') - $oldproject->numberofbatteries;
+
+
+               $subitem = Subitem::where('id', $st->subitemid)->first();
+               $subitem->quantity =  $subitem->quantity - $diff;
+               $subitem->save();
 
         }
-        $st = new Stockaddition();
-        $st->itemid = $batterytype->itemid;
-        $st->subitemid = $batterytype->id;
-        $st->quantity = $request->input('numberofbatteries');
-        $st->userid = $id;
-        $st->transactiontype = "sold";
-        $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
-        $st->projecttid = $project->id;
-        if($st->quantity > 0){
-        $st->save();
-         }
-        $batterytype->quantity = $batterytype->quantity - $request->input('numberofbatteries');
-        $batterytype->save();
+        if($oldproject->batterytypeid != $request->input('batterytypeid'))
+        {
+            $st =  Stockaddition::where(['projecttid'=>$oldproject->id, 'subitemid'=>$oldproject->batterytypeid])->first();
+            if($st != null){ $st->delete();}
 
-        $st = new Stockaddition();
-        $st->itemid = $solarpaneltype->itemid;
-        $st->subitemid = $solarpaneltype->id;
-        $st->quantity = $request->input('numberofpanels');
-        $st->userid = $id;
-        $st->transactiontype = "sold";
-        $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
-        $st->projecttid = $project->id;
-          if($st->quantity > 0){
-          $st->save();
-          }
-        $solarpaneltype->quantity = $solarpaneltype->quantity - $request->input('numberofpanels');
-        $solarpaneltype->save();
+            $batterytype = Subitem::where('id', $request->input('batterytypeid'))->first();
+            $st = new Stockaddition();
 
-        $st = new Stockaddition();
-        $st->itemid = $invertertype->itemid;
-        $st->subitemid = $invertertype->id;
-        $st->quantity = $request->input('numberofinverters');
-        $st->userid = $id;
-        $st->transactiontype = "sold";
-        $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
-        $st->projecttid = $project->id;
-        if($st->quantity > 0){
-         $st->save();
+            $st->itemid = $batterytype->itemid;
+            $st->subitemid = $batterytype->id;
+            $st->quantity = $request->input('numberofbatteries');
+            $st->userid = $id;
+            $st->transactiontype = "sold";
+            $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
+            $st->projecttid = $project->id;
+            if($st->quantity > 0){
+            $st->save();
+             }
+
+               $subitemtorestore = Subitem::where('id', $oldproject->batterytypeid)->first();
+               $subitemtorestore->quantity =  $subitemtorestore->quantity  + $oldproject->numberofbatteries ;
+               $subitemtorestore->save();
+
+               $subitemtoreduce = Subitem::where('id', $request->input('batterytypeid'))->first();
+               $subitemtoreduce->quantity = $subitemtoreduce->quantity  - $request->input('numberofbatteries') ;
+               $subitemtoreduce->save();
          }
-        $invertertype->quantity = $invertertype->quantity - $request->input('numberofinverters');
-        $invertertype->save();
+
+
+
+
+           if($oldproject->invertertypeid == $request->input('invertertypeid'))
+           {
+               $st =  Stockaddition::where(['projecttid'=>$oldproject->id, 'subitemid'=>$oldproject->invertertypeid])->first();
+               $st->quantity = $request->input('numberofinverters');
+               $st->save();
+
+               $diff = $request->input('numberofinverters') - $oldproject->numberofinverters;
+
+
+                  $subitem = Subitem::where('id', $st->subitemid)->first();
+                  $subitem->quantity =  $subitem->quantity - $diff;
+                  $subitem->save();
+
+           }
+           if($oldproject->invertertypeid != $request->input('invertertypeid'))
+           {
+               $st =  Stockaddition::where(['projecttid'=>$oldproject->id, 'subitemid'=>$oldproject->invertertypeid])->first();
+               if($st != null){ $st->delete();}
+
+               $invertertype = Subitem::where('id', $request->input('invertertypeid'))->first();
+               $st = new Stockaddition();
+
+               $st->itemid = $invertertype->itemid;
+               $st->subitemid = $invertertype->id;
+               $st->quantity = $request->input('numberofinverters');
+               $st->userid = $id;
+               $st->transactiontype = "sold";
+               $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
+               $st->projecttid = $project->id;
+               if($st->quantity > 0){
+               $st->save();
+                }
+
+                  $subitemtorestore = Subitem::where('id', $oldproject->invertertypeid)->first();
+                  $subitemtorestore->quantity =  $subitemtorestore->quantity  + $oldproject->numberofinverters ;
+                  $subitemtorestore->save();
+
+                  $subitemtoreduce = Subitem::where('id', $request->input('invertertypeid'))->first();
+                  $subitemtoreduce->quantity = $subitemtoreduce->quantity  - $request->input('numberofinverters') ;
+                  $subitemtoreduce->save();
+
+            }
+
+
+
+              if($oldproject->solarpaneltypeid == $request->input('solarpaneltypeid'))
+              {
+                  $st =  Stockaddition::where(['projecttid'=>$oldproject->id, 'subitemid'=>$oldproject->solarpaneltypeid])->first();
+                  $st->quantity = $request->input('numberofpanels');
+                  $st->save();
+
+                  $diff = $request->input('numberofpanels') - $oldproject->numberofpanels;
+
+
+                     $subitem = Subitem::where('id', $st->subitemid)->first();
+                     $subitem->quantity =  $subitem->quantity - $diff;
+                     $subitem->save();
+
+              }
+              if($oldproject->solarpaneltypeid != $request->input('solarpaneltypeid'))
+              {
+                  $st =  Stockaddition::where(['projecttid'=>$oldproject->id, 'subitemid'=>$oldproject->solarpaneltypeid])->first();
+                  if($st != null){ $st->delete();}
+
+                  $solarpaneltype = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
+                  $st = new Stockaddition();
+
+                  $st->itemid = $solarpaneltype->itemid;
+                  $st->subitemid = $solarpaneltype->id;
+                  $st->quantity = $request->input('numberofpanels');
+                  $st->userid = $id;
+                  $st->transactiontype = "sold";
+                  $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
+                  $st->projecttid = $project->id;
+                  if($st->quantity > 0){
+                  $st->save();
+                   }
+
+                     $subitemtorestore = Subitem::where('id', $oldproject->solarpaneltypeid)->first();
+                     $subitemtorestore->quantity =  $subitemtorestore->quantity  + $oldproject->numberofpanels ;
+                     $subitemtorestore->save();
+
+                     $subitemtoreduce = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
+                     $subitemtoreduce->quantity = $subitemtoreduce->quantity  - $request->input('numberofpanels') ;
+                     $subitemtoreduce->save();
+
+               }
+
+
+
+
+
+
+
+
 
           $statement = "Edited Project  with name ". $project->projectname;
           $changes =  json_encode($project->getChanges());
           $this->logAudit($loggedinuser->email, $statement, $request->ip(), $request->server('HTTP_USER_AGENT'), $changes);
-
-
 
           return response()->json(['status'=>'success', 'message'=>'project edited successfully', 'data'=>$project],200);
       }
