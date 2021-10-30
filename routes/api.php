@@ -6,6 +6,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\MessagesController;
+use App\Http\Controllers\API\InventoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,4 +77,16 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::post('deleteproject', [ProjectController::class, 'deleteproject']);
     Route::post('loggedinuseruploadprofilepicture', [UserController::class, 'loggedinuseruploadprofilepicture']);
     Route::post('postpicture', [UserController::class, 'postpicture']);
+    Route::post('createsubitem', [InventoryController::class, 'createsubitem']);
+    Route::post('editsubitem', [InventoryController::class, 'editsubitem']);
+    Route::post('addstock', [InventoryController::class, 'addstock']);
+
+
 });
+
+Route::get('fetchitems', [InventoryController::class,'fetchitems']);
+Route::get('getitembyid/{id}', [InventoryController::class,'getitembyid']);
+Route::get('fetchsubitems', [InventoryController::class, 'fetchsubitems']);
+Route::get('getsubitembyid/{id}', [InventoryController::class,'getsubitembyid']);
+Route::get('viewavailablestocks', [InventoryController::class, 'viewavailablestocks']);
+Route::get('viewinventory', [InventoryController::class, 'viewinventory']);
