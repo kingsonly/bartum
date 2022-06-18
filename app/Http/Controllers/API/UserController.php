@@ -127,11 +127,7 @@ class UserController extends Controller
             return response()->json(['status'=>'success', 'message'=>"user created successfully",  'data' =>$user],200);
         }
         else{
-<<<<<<< HEAD
-            return response()->json(['status'=>'error', 'message'=>'cannot create user',  'data' =>$user],200);
-=======
             return response()->json(['status'=>'error', 'message'=>'cannot create user',  'data' =>$user],400);
->>>>>>> 4e0e04603dd00eec7f38b64a438fcce6994534e3
         }
 
   }
@@ -174,11 +170,7 @@ class UserController extends Controller
 
                     if($validator->fails())
                     {
-<<<<<<< HEAD
-                      return response()->json(['status'=>'error', 'message'=>'email is required',  'data' =>''],200);
-=======
                       return response()->json(['status'=>'error', 'message'=>'email is required',  'data' =>''],400);
->>>>>>> 4e0e04603dd00eec7f38b64a438fcce6994534e3
                     }
                     else
                     {
@@ -188,11 +180,7 @@ class UserController extends Controller
 
                     if(empty($user))
                     {
-<<<<<<< HEAD
-                        return response()->json(["status"=>"error", "message" =>"The email address you entered does not exist.", "data"=>''], 200);
-=======
                         return response()->json(["status"=>"error", "message" =>"The email address you entered does not exist.", "data"=>''], 400);
->>>>>>> 4e0e04603dd00eec7f38b64a438fcce6994534e3
                     }
                     else
                     {
@@ -226,11 +214,7 @@ class UserController extends Controller
 
         if($validator->fails())
         {
-<<<<<<< HEAD
-          return response()->json(['status'=>'error', 'message'=>'password is required',  'data' =>''],200);
-=======
           return response()->json(['status'=>'error', 'message'=>'password is required',  'data' =>''],400);
->>>>>>> 4e0e04603dd00eec7f38b64a438fcce6994534e3
         }
 
 
@@ -240,11 +224,7 @@ class UserController extends Controller
 
         if($validator->fails())
         {
-<<<<<<< HEAD
-          return response()->json(['status'=>'error', 'message'=>'resetcode is required',  'data' =>''],200);
-=======
           return response()->json(['status'=>'error', 'message'=>'resetcode is required',  'data' =>''],400);
->>>>>>> 4e0e04603dd00eec7f38b64a438fcce6994534e3
         }
 
 
@@ -256,11 +236,7 @@ class UserController extends Controller
 
         if($user2 == null)
         {
-<<<<<<< HEAD
-          return response()->json(["status"=>"error", "message" =>"code does not exist or expired", "data"=>''], 200);
-=======
           return response()->json(["status"=>"error", "message" =>"code does not exist or expired", "data"=>''], 400);
->>>>>>> 4e0e04603dd00eec7f38b64a438fcce6994534e3
         }
         else{
           $user2->passwordresetcode = time();
@@ -273,8 +249,6 @@ class UserController extends Controller
         }
       }
 
-<<<<<<< HEAD
-=======
       public function notauthenticated()
       {
         return response()->json(['status'=>'error', 'message'=>'user not authenticated',  'data' =>''],401);
@@ -959,6 +933,5 @@ class UserController extends Controller
           }
         }
 
->>>>>>> 4e0e04603dd00eec7f38b64a438fcce6994534e3
 
 }
