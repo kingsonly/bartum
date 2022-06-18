@@ -31,6 +31,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'reverse',
+        'passwordresetcode',
+        'emailresetcode'
     ];
 
     /**
@@ -41,4 +44,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function Auditrail()
+    {
+        return $this->hasMany(Auditrail::class);
+    }
 }

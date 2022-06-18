@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Subitem extends Model
+{
+    use HasFactory;
+
+public function Item()
+{
+    return $this->belongsTo(Item::class, 'itemid');
+}
+
+public function Stockaddition()
+{
+    return $this->hasMany(Stockaddition::class);
+}
+
+}

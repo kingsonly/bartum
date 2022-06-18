@@ -1,0 +1,4 @@
+[11-Oct-2021 17:32:35 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Tests\TestCase' not found in /home/jumahcno/393water.com/bamback/tests/Feature/ExampleTest.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/tests/Feature/ExampleTest.php on line 8

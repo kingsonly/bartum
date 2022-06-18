@@ -1,0 +1,4 @@
+[11-Oct-2021 17:33:31 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Routing\Controller' not found in /home/jumahcno/393water.com/bamback/app/Http/Controllers/Controller.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/app/Http/Controllers/Controller.php on line 10

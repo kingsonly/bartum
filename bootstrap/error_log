@@ -1,0 +1,12 @@
+[05-Sep-2021 18:19:32 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/jumahcno/393water.com/bamback/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/bootstrap/app.php on line 14
+[05-Sep-2021 18:57:21 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/jumahcno/393water.com/bamback/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/bootstrap/app.php on line 14
+[11-Oct-2021 17:31:53 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/jumahcno/393water.com/bamback/bootstrap/app.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/jumahcno/393water.com/bamback/bootstrap/app.php on line 14
