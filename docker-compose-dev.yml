@@ -1,0 +1,58 @@
+version: '3.2'
+
+services:
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 20080:8000
+    volumes:
+      # Re-use local composer cache via host-volume
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      # Mount source-code for development
+      - ./app:/app/app
+      - ./bootstrap:/app/bootstrap
+      - ./config:/app/config
+      - ./database:/app/database
+      - ./public:/app/public
+      - ./resources:/app/resources
+      - ./routes:/app/routes
+      - ./storage:/app/storage
+      - ./test:/app/test
+      - ./.env:/app/.env
+    networks:
+      - energyback
+
+      
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=Ubuxa##99
+      - MYSQL_DATABASE=forge
+      - MYSQL_USER=forge
+      - MYSQL_PASSWORD=Ubuxa##99
+    networks:
+      - energyback
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 9090:80
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PASSWORD=Ubuxa##99
+    restart: unless-stopped
+    volumes:
+    # Re-use local composer cache via host-volume
+    - ~/.composer-docker/cache:/root/.composer/cache:delegated
+    # Mount source-code for development
+    - ./:/app
+    networks:
+      - energyback
+  
+networks:
+  energyback:
+    driver: bridge

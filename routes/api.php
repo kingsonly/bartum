@@ -20,7 +20,7 @@ use App\Http\Controllers\API\InventoryController;
 */
 
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+return $request->user();
 });*/
 
 Route::post('login', [UserController::class, 'login']);
@@ -80,8 +80,6 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::post('createsubitem', [InventoryController::class, 'createsubitem']);
     Route::post('editsubitem', [InventoryController::class, 'editsubitem']);
     Route::post('addstock', [InventoryController::class, 'addstock']);
-
-
 });
 
 Route::get('fetchitems', [InventoryController::class,'fetchitems']);

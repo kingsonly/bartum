@@ -19,6 +19,7 @@ use App\Models\Auditrail;
 use App\Models\Item;
 use App\Models\Subitem;
 use App\Models\Stockaddition;
+use App\Mail\ProjectPaymentRequest;
 
 
 class ProjectController extends Controller
@@ -99,9 +100,9 @@ class ProjectController extends Controller
         return response()->json(['status' => 'error' , 'message'=>'Price  is required' , 'data'=>''],400);
         }
 
-        $validator = Validator::make($request->all(),[
-            'numberofinverters' => 'required|integer|min:0',
-        ]);
+        // $validator = Validator::make($request->all(),[
+        //     'numberofinverters' => 'required|integer|min:0',
+        // ]);
         if($validator->fails()){
         return response()->json(['status' => 'error' , 'message'=>'numberofinverters  is required, must be a number' , 'data'=>''],400);
         }
@@ -113,23 +114,24 @@ class ProjectController extends Controller
         return response()->json(['status' => 'error' , 'message'=>'numberofpanels  is required, must be a number' , 'data'=>''],400);
         }
 
-        $validator = Validator::make($request->all(),[
-            'batterytypeid' => 'required|integer|min:1',
-        ]);
+        // $validator = Validator::make($request->all(),[
+        //     'batterytypeid' => 'required|integer|min:1',
+        // ]);
+
         if($validator->fails()){
         return response()->json(['status' => 'error' , 'message'=>'batterytypeid  is required' , 'data'=>''],400);
         }
 
-        $validator = Validator::make($request->all(),[
-            'invertertypeid' => 'required|integer|min:1',
-        ]);
+        // $validator = Validator::make($request->all(),[
+        //     'invertertypeid' => 'required|integer|min:1',
+        // ]);
         if($validator->fails()){
         return response()->json(['status' => 'error' , 'message'=>'invertertypeid  is required' , 'data'=>''],400);
         }
 
-        $validator = Validator::make($request->all(),[
-            'solarpaneltypeid' => 'required|integer|min:1',
-        ]);
+        // $validator = Validator::make($request->all(),[
+        //     'solarpaneltypeid' => 'required|integer|min:1',
+        // ]);
         if($validator->fails()){
         return response()->json(['status' => 'error' , 'message'=>'solarpaneltypeid  is required' , 'data'=>''],400);
         }
@@ -149,27 +151,27 @@ class ProjectController extends Controller
             return response()->json(['status' => 'error' , 'message'=>'Client is not found' , 'data'=>''],400);
         }
 
-        $batterytype = Subitem::where('id', $request->input('batterytypeid'))->first();
-        if($request->input('numberofbatteries') > $batterytype->quantity)
-        {
-          $message = $batterytype->name. " has only". $batterytype->quantity ." left";
-          return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
-        }
+        // $batterytype = Subitem::where('id', $request->input('batterytypeid'))->first();
+        // if($request->input('numberofbatteries') > $batterytype->quantity)
+        // {
+        //   $message = $batterytype->name. " has only". $batterytype->quantity ." left";
+        //   return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+        // }
 
-        $solarpaneltype = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
-        if($request->input('numberofpanels') > $solarpaneltype->quantity)
-        {
-          $message = $solarpaneltype->name. " has only". $solarpaneltype->quantity ." left";
-          return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
-        }
+        // $solarpaneltype = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
+        // if($request->input('numberofpanels') > $solarpaneltype->quantity)
+        // {
+        //   $message = $solarpaneltype->name. " has only". $solarpaneltype->quantity ." left";
+        //   return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+        // }
 
 
-        $invertertype = Subitem::where('id', $request->input('invertertypeid'))->first();
-        if($request->input('numberofinverters') > $invertertype->quantity)
-        {
-          $message = $invertertype->name. " has only". $invertertype->quantity ." left";
-          return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
-        }
+        // $invertertype = Subitem::where('id', $request->input('invertertypeid'))->first();
+        // if($request->input('numberofinverters') > $invertertype->quantity)
+        // {
+        //   $message = $invertertype->name. " has only". $invertertype->quantity ." left";
+        //   return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+        // }
 
 
         $lga = $lga->lganame;
@@ -201,16 +203,16 @@ class ProjectController extends Controller
         $client  =  Client::where('id',$request->clientid)->first();
         $project->clientuserid =  $client->userid;
         $project->addedby =  $id;
-        $project->numberofinverters =  $request->input('numberofinverters');
-        $project->batterytypeid =  $request->input('batterytypeid');
-        $project->invertertypeid =  $request->input('invertertypeid');
-        $project->solarpaneltypeid =  $request->input('solarpaneltypeid');
+        //$project->numberofinverters =  $request->input('numberofinverters');
+        // $project->batterytypeid =  $request->input('batterytypeid');
+        // $project->invertertypeid =  $request->input('invertertypeid');
+        // $project->solarpaneltypeid =  $request->input('solarpaneltypeid');
 
         if($project->save())
         {
             $st = new Stockaddition();
-            $st->itemid = $batterytype->itemid;
-            $st->subitemid = $batterytype->id;
+            // $st->itemid = $batterytype->itemid;
+            $st->subitemid = 1 ; //$batterytype->id;
             $st->quantity = $request->input('numberofbatteries');
             $st->userid = $id;
             $st->transactiontype = "sold";
@@ -219,43 +221,50 @@ class ProjectController extends Controller
             if($st->quantity > 0){
             $st->save();
              }
-            $batterytype->quantity = $batterytype->quantity - $request->input('numberofbatteries');
-            $batterytype->save();
+            //$batterytype->quantity = $batterytype->quantity - $request->input('numberofbatteries');
+            //$batterytype->save();
 
             $st = new Stockaddition();
-            $st->itemid = $solarpaneltype->itemid;
-            $st->subitemid = $solarpaneltype->id;
+            // $st->itemid = $solarpaneltype->itemid;
+            $st->subitemid = 1;//$solarpaneltype->id;
             $st->quantity = $request->input('numberofpanels');
             $st->userid = $id;
             $st->transactiontype = "sold";
             $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
             $st->projecttid = $project->id;
               if($st->quantity > 0){
-              $st->save();
+                $st->save();
               }
-            $solarpaneltype->quantity = $solarpaneltype->quantity - $request->input('numberofpanels');
-            $solarpaneltype->save();
+            //$solarpaneltype->quantity = $solarpaneltype->quantity - $request->input('numberofpanels');
+            //$solarpaneltype->save();
 
             $st = new Stockaddition();
-            $st->itemid = $invertertype->itemid;
-            $st->subitemid = $invertertype->id;
+            // $st->itemid = $invertertype->itemid;
+            $st->subitemid = 1;//$invertertype->id;
             $st->quantity = $request->input('numberofinverters');
             $st->userid = $id;
             $st->transactiontype = "sold";
             $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
             $st->projecttid = $project->id;
             if($st->quantity > 0){
-             $st->save();
+                $st->save();
              }
-            $invertertype->quantity = $invertertype->quantity - $request->input('numberofinverters');
-            $invertertype->save();
+            //$invertertype->quantity = $invertertype->quantity - $request->input('numberofinverters');
+            //$invertertype->save();
 
             $statement = "Added Project  with name ". $project->projectname;
 
             $this->logAudit($loggedinuser->email, $statement, $request->ip(), $request->server('HTTP_USER_AGENT'), $project);
 
 
+             // send email to client for paymet, note the type or form of payment.
+             try{
 
+                Mail::to($client->email)->send(New ProjectPaymentRequest($project));
+           }
+           catch(\Exception $e){
+
+           }
             return response()->json(['status'=>'success', 'message'=>'project saved successfully', 'data'=>$project],200);
         }
         else{
@@ -358,7 +367,7 @@ class ProjectController extends Controller
 
     public function fetchmonthlylinechart()
     {
-      $lastmonths = $this->getpreviousmonths(12);
+      $lastmonths = $this->getpreviousmonths(12); // change 12 to current month of that year 
       $line_graph = array();
       foreach($lastmonths as $on)
       {
