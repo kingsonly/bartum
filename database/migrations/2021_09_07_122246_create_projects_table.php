@@ -30,6 +30,7 @@ class CreateProjectsTable extends Migration
             $table->string('projectcode')->nullable();
             $table->string('lgaid')->nullable();
             $table->string('lga')->nullable();
+            $table->string('trashed')->nullable();
             $table->string('stateid')->nullable();
             $table->decimal('price',12,2)->nullable();
             $table->string('addedby')->nullable();
