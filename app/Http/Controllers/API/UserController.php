@@ -50,9 +50,11 @@ class UserController extends Controller
 
   public function register(Request $request)
   {
+    
     $validator = Validator::make($request->all(),[
         'email' => 'required',
     ]);
+    
     if($validator->fails()){
     return response()->json(['status' => 'error' , 'message'=>'email  is required' , 'data'=>''],400);
     }
@@ -60,6 +62,7 @@ class UserController extends Controller
     $validator = Validator::make($request->all(),[
         'email' => 'unique:users',
     ]);
+
     if($validator->fails()){
     return response()->json(['status' => 'error' , 'message'=>'email  has been taken' , 'data'=>''],400);
     }
@@ -81,6 +84,7 @@ class UserController extends Controller
     $validator = Validator::make($request->all(),[
         'lastname' => 'required',
     ]);
+    
     if($validator->fails()){
     return response()->json(['status' => 'error' , 'message'=>'lastname is required',  'data'=>''],400);
     }

@@ -1,0 +1,44 @@
+version: 2.1
+
+
+jobs:
+  deploy-dev:
+    
+    docker:
+        - image: cimg/php:8.1.7
+    working_directory: ~/repo
+    steps:
+      - add_ssh_keys:
+         fingerprints: 
+          - "11:7d:ae:d2:b5:c9:18:5f:1b:aa:ba:e7:dd:4f:50:f4"
+      - checkout
+      # install dependencies
+      - setup_remote_docker:
+          version: 20.10.12
+          docker_layer_caching: true
+      - run:
+          name: Install dependencies
+          command: composer install
+
+      - run:
+          name: Install  rsync 
+          command: sudo apt-get install rsync
+      - run:
+          name: Update known hosts
+          command: ssh-keyscan -H 192.254.235.94 >> ~/.ssh/known_hosts
+
+      # - run:
+      #     name: ssh login  
+      #     command: |
+      #       rsync -va --delete dist/ bartumen@192.254.235.94:admin.bartumenergy.com
+      - run:
+          name: Directory Listing  
+          command: ls
+workflows:
+  version: 2
+  Barm_deploy:
+    jobs:
+      - deploy-dev: # Use the pre-configured job, deploy-via-git
+          filters:
+            branches:
+              only: master

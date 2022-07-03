@@ -19,6 +19,11 @@ use App\Models\Auditrail;
 use App\Models\Item;
 use App\Models\Subitem;
 use App\Models\Stockaddition;
+use App\Mail\ProjectPaymentRequest;
+use App\Models\ProjectAddress;
+use App\Models\ProjectOrder;
+use App\Models\ProjectOrderDetails;
+
 
 
 class ProjectController extends Controller
@@ -99,9 +104,9 @@ class ProjectController extends Controller
         return response()->json(['status' => 'error' , 'message'=>'Price  is required' , 'data'=>''],400);
         }
 
-        $validator = Validator::make($request->all(),[
-            'numberofinverters' => 'required|integer|min:0',
-        ]);
+        // $validator = Validator::make($request->all(),[
+        //     'numberofinverters' => 'required|integer|min:0',
+        // ]);
         if($validator->fails()){
         return response()->json(['status' => 'error' , 'message'=>'numberofinverters  is required, must be a number' , 'data'=>''],400);
         }
@@ -113,23 +118,24 @@ class ProjectController extends Controller
         return response()->json(['status' => 'error' , 'message'=>'numberofpanels  is required, must be a number' , 'data'=>''],400);
         }
 
-        $validator = Validator::make($request->all(),[
-            'batterytypeid' => 'required|integer|min:1',
-        ]);
+        // $validator = Validator::make($request->all(),[
+        //     'batterytypeid' => 'required|integer|min:1',
+        // ]);
+
         if($validator->fails()){
         return response()->json(['status' => 'error' , 'message'=>'batterytypeid  is required' , 'data'=>''],400);
         }
 
-        $validator = Validator::make($request->all(),[
-            'invertertypeid' => 'required|integer|min:1',
-        ]);
+        // $validator = Validator::make($request->all(),[
+        //     'invertertypeid' => 'required|integer|min:1',
+        // ]);
         if($validator->fails()){
         return response()->json(['status' => 'error' , 'message'=>'invertertypeid  is required' , 'data'=>''],400);
         }
 
-        $validator = Validator::make($request->all(),[
-            'solarpaneltypeid' => 'required|integer|min:1',
-        ]);
+        // $validator = Validator::make($request->all(),[
+        //     'solarpaneltypeid' => 'required|integer|min:1',
+        // ]);
         if($validator->fails()){
         return response()->json(['status' => 'error' , 'message'=>'solarpaneltypeid  is required' , 'data'=>''],400);
         }
@@ -149,27 +155,27 @@ class ProjectController extends Controller
             return response()->json(['status' => 'error' , 'message'=>'Client is not found' , 'data'=>''],400);
         }
 
-        $batterytype = Subitem::where('id', $request->input('batterytypeid'))->first();
-        if($request->input('numberofbatteries') > $batterytype->quantity)
-        {
-          $message = $batterytype->name. " has only". $batterytype->quantity ." left";
-          return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
-        }
+        // $batterytype = Subitem::where('id', $request->input('batterytypeid'))->first();
+        // if($request->input('numberofbatteries') > $batterytype->quantity)
+        // {
+        //   $message = $batterytype->name. " has only". $batterytype->quantity ." left";
+        //   return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+        // }
 
-        $solarpaneltype = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
-        if($request->input('numberofpanels') > $solarpaneltype->quantity)
-        {
-          $message = $solarpaneltype->name. " has only". $solarpaneltype->quantity ." left";
-          return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
-        }
+        // $solarpaneltype = Subitem::where('id', $request->input('solarpaneltypeid'))->first();
+        // if($request->input('numberofpanels') > $solarpaneltype->quantity)
+        // {
+        //   $message = $solarpaneltype->name. " has only". $solarpaneltype->quantity ." left";
+        //   return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+        // }
 
 
-        $invertertype = Subitem::where('id', $request->input('invertertypeid'))->first();
-        if($request->input('numberofinverters') > $invertertype->quantity)
-        {
-          $message = $invertertype->name. " has only". $invertertype->quantity ." left";
-          return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
-        }
+        // $invertertype = Subitem::where('id', $request->input('invertertypeid'))->first();
+        // if($request->input('numberofinverters') > $invertertype->quantity)
+        // {
+        //   $message = $invertertype->name. " has only". $invertertype->quantity ." left";
+        //   return response()->json(['status' => 'error' , 'message'=>$message , 'data'=>''],400);
+        // }
 
 
         $lga = $lga->lganame;
@@ -201,16 +207,16 @@ class ProjectController extends Controller
         $client  =  Client::where('id',$request->clientid)->first();
         $project->clientuserid =  $client->userid;
         $project->addedby =  $id;
-        $project->numberofinverters =  $request->input('numberofinverters');
-        $project->batterytypeid =  $request->input('batterytypeid');
-        $project->invertertypeid =  $request->input('invertertypeid');
-        $project->solarpaneltypeid =  $request->input('solarpaneltypeid');
+        //$project->numberofinverters =  $request->input('numberofinverters');
+        // $project->batterytypeid =  $request->input('batterytypeid');
+        // $project->invertertypeid =  $request->input('invertertypeid');
+        // $project->solarpaneltypeid =  $request->input('solarpaneltypeid');
 
         if($project->save())
         {
             $st = new Stockaddition();
-            $st->itemid = $batterytype->itemid;
-            $st->subitemid = $batterytype->id;
+            // $st->itemid = $batterytype->itemid;
+            $st->subitemid = 1 ; //$batterytype->id;
             $st->quantity = $request->input('numberofbatteries');
             $st->userid = $id;
             $st->transactiontype = "sold";
@@ -219,43 +225,50 @@ class ProjectController extends Controller
             if($st->quantity > 0){
             $st->save();
              }
-            $batterytype->quantity = $batterytype->quantity - $request->input('numberofbatteries');
-            $batterytype->save();
+            //$batterytype->quantity = $batterytype->quantity - $request->input('numberofbatteries');
+            //$batterytype->save();
 
             $st = new Stockaddition();
-            $st->itemid = $solarpaneltype->itemid;
-            $st->subitemid = $solarpaneltype->id;
+            // $st->itemid = $solarpaneltype->itemid;
+            $st->subitemid = 1;//$solarpaneltype->id;
             $st->quantity = $request->input('numberofpanels');
             $st->userid = $id;
             $st->transactiontype = "sold";
             $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
             $st->projecttid = $project->id;
               if($st->quantity > 0){
-              $st->save();
+                $st->save();
               }
-            $solarpaneltype->quantity = $solarpaneltype->quantity - $request->input('numberofpanels');
-            $solarpaneltype->save();
+            //$solarpaneltype->quantity = $solarpaneltype->quantity - $request->input('numberofpanels');
+            //$solarpaneltype->save();
 
             $st = new Stockaddition();
-            $st->itemid = $invertertype->itemid;
-            $st->subitemid = $invertertype->id;
+            // $st->itemid = $invertertype->itemid;
+            $st->subitemid = 1;//$invertertype->id;
             $st->quantity = $request->input('numberofinverters');
             $st->userid = $id;
             $st->transactiontype = "sold";
             $st->tracking = substr(str_shuffle("1234567890"),-6).substr(str_shuffle("ABCDFEGHIJKLMNPQRSTUVWZYX"),-2);
             $st->projecttid = $project->id;
             if($st->quantity > 0){
-             $st->save();
+                $st->save();
              }
-            $invertertype->quantity = $invertertype->quantity - $request->input('numberofinverters');
-            $invertertype->save();
+            //$invertertype->quantity = $invertertype->quantity - $request->input('numberofinverters');
+            //$invertertype->save();
 
             $statement = "Added Project  with name ". $project->projectname;
 
             $this->logAudit($loggedinuser->email, $statement, $request->ip(), $request->server('HTTP_USER_AGENT'), $project);
 
 
+             // send email to client for paymet, note the type or form of payment.
+             try{
 
+                Mail::to($client->email)->send(New ProjectPaymentRequest($project));
+           }
+           catch(\Exception $e){
+
+           }
             return response()->json(['status'=>'success', 'message'=>'project saved successfully', 'data'=>$project],200);
         }
         else{
@@ -358,7 +371,7 @@ class ProjectController extends Controller
 
     public function fetchmonthlylinechart()
     {
-      $lastmonths = $this->getpreviousmonths(12);
+      $lastmonths = $this->getpreviousmonths(12); // change 12 to current month of that year 
       $line_graph = array();
       foreach($lastmonths as $on)
       {
@@ -935,8 +948,7 @@ class ProjectController extends Controller
 
       $statement = "Deleted Project  with name ". $project->projectname;
       $this->logAudit($loggedinuser->email, $statement, $request->ip(), $request->server('HTTP_USER_AGENT'), $project);
-
-return response()->json(['status'=>'success', 'message'=>'project deleted successfully', 'data'=>''],200);
+      return response()->json(['status'=>'success', 'message'=>'project deleted successfully', 'data'=>''],200);
 
     }
 
@@ -956,6 +968,209 @@ return response()->json(['status'=>'success', 'message'=>'project deleted succes
       $auditlog->object =  $object;
       $auditlog->save();
     }
+
+
+
+
+
+
+    public function createProject(Request $request)
+     {
+
+         //$value = Mail::to("kingsonly13c@gmail.com")->send(New ProjectPaymentRequest(["link" => 12345,"firstname" => "Achumie Kingsley"]));
+         return new ProjectPaymentRequest(["link" => 12345,"firstname" => "Achumie Kingsley"]);
+        // return response()->json(['status'=>'success', 'message'=>'project saved successfully', 'data'=>$value],200);
+        
+        $loggedinuser = auth()->guard('sanctum')->user();
+        $id = $loggedinuser->id;
+        
+
+        // Validate Request 
+
+        // $validator = Validator::make($request->all(),[
+        //     'projectname' => 'required|unique:projects',
+        // ]);
+        // if($validator->fails()){
+        // return response()->json(['status' => 'error' , 'message'=>'projectname  is required and projectname must not repeat' , 'data'=>''],400);
+        // }
+
+        // Models Init
+        $inventoryModel = new Stockaddition();
+        $productModel = new Product();
+        $projectModel = new Project();
+        $clientModel = Client::where('id',$request->input('clientid'))->first() ;
+
+        //save project
+
+
+        $projectModel->projectname =  $request->input('projectname');
+        $projectModel->projecttype =  $request->input('projecttype');
+        $projectModel->solarsystemsize =  $request->input('solarsystemsize');
+        $projectModel->numberofpanels =  $request->input('numberofpanels');
+
+        $projectModel->numberofbatteries =  $request->input('numberofbatteries');
+        $projectModel->description =  $request->input('description');
+        $projectModel->productid =  $request->input('productid');
+        $projectModel->installationtype =  $request->input('installationtype');
+
+
+        $projectModel->status =  $request->input('status');
+        $projectModel->clientid =  $request->input('clientid');
+        $projectModel->lgaid =  $request->input('lgaid');
+        $projectModel->price =  $request->input('price');
+        $projectModel->stateid =  $request->input('stateid');
+        $projectModel->projectcode =  str_shuffle("1234567890ABC");
+        $projectModel->addedby =  $id;
+        
+        // note check availability of stuck before entring project
+        if($projectModel->save()){
+            // after project have been created we then create all instalation address associated with the project 
+            // create a loop of address instance to create all addres
+            // address created would be looped to create order
+            $getProduct = Product::where("id",$projectModel->productid)->first();
+            foreach(json_decode($request->address) as $key => $value){
+                $projectAddressModel = new ProjectAddress() ;
+                $projectAddressModel->projects_id = $projectModel->id;
+                $projectAddressModel->log = $value->log;
+                $projectAddressModel->lat = $value->lat;
+                $projectAddressModel->client_id = $projectModel->clientid;
+                $projectAddressModel->address_description = $value->address;
+                $projectAddressModel->states_id = $value->states_id;
+                $projectAddressModel->lgas_id = $value->lgas_id;
+                $projectAddressModel->status= 1;
+                $projectAddressModel->save();
+            }
+
+            
+            $getAddress = ProjectAddress::where("projects_id",$projectModel->id)->get();
+            // using the address as a point to make product selection for the project and create an order and an order details
+            $projectAmout = 0;
+            foreach($getAddress as $addressKey => $addressValues){
+                //create a new order and link order to 
+                $orderAmount = 0;
+                $projectOrderModel = new ProjectOrder();
+                $projectOrderModel->order_number = $projectModel->id."_".str_shuffle("1234567890ABC");
+                $projectOrderModel->order_description = $projectModel->description;
+                $projectOrderModel->project_id = $projectModel->id;
+                $projectOrderModel->client_id = $projectModel->clientid;
+                $projectOrderModel->status = 1;
+                $projectOrderModel->address_id = $addressValues->id;
+                if($projectOrderModel->save()){
+                    
+
+                    $projectOrderDetailsModel = new ProjectOrderDetails() ;
+                    //get product with id
+                    
+                    $subItemModelInverter = Stockaddition::where(
+                            [
+                                ['subitemid', '=', $getProduct->inverter_type],
+                                ['status', '=', 1],
+                            ]
+                        )->first();
+                        // create order details for inverter and save 
+                    $orderAmount += $subItemModelInverter->price;
+                    $orderDetails = new ProjectOrderDetails();
+                    $orderDetails->product_type = 0;
+                    $orderDetails->product_id = $subItemModelInverter->id;
+                    $orderDetails->order_id = $projectOrderModel->id;
+                    $orderDetails->project_id = $projectModel->id;
+                    $orderDetails->client_id = $projectModel->clientid;
+                    $orderDetails->status = 1;
+                    
+                    if($orderDetails->save()){
+                        $subItemModelInverter->status = 0;
+                        $subItemModelInverter->save();
+                    }
+
+                    if($getProduct->numberofpanels > 0){
+                        for($i = 0; $i < $getProduct->numberofpanels; $i++){
+                            $projectOrderDetailsModel = new ProjectOrderDetails() ;
+                            //get product with id
+                    
+                            $subItemModelInverter = Stockaddition::where(
+                                    [
+                                        ['subitemid', '=', $getProduct->panel_type],
+                                        ['status', '=', 1],
+                                    ]
+                                )->first();
+                            $orderAmount += $subItemModelInverter->price;
+                            // create order details for inverter and save 
+                            $orderDetails = new ProjectOrderDetails();
+                            $orderDetails->product_type = 0;
+                            $orderDetails->product_id = $subItemModelInverter->id;
+                            $orderDetails->order_id = $projectOrderModel->id;
+                            $orderDetails->project_id = $projectModel->id;
+                            $orderDetails->client_id = $projectModel->clientid;
+                            $orderDetails->status = 1;
+                    
+                            if($orderDetails->save()){
+                                $subItemModelInverter->status = 0;
+                                $subItemModelInverter->save();
+                            }
+
+                        }
+                    }
+
+                    if($getProduct->numberofbatteries > 0){
+                        for($i = 0; $i < $getProduct->numberofbatteries; $i++){
+                            $projectOrderDetailsModel = new ProjectOrderDetails() ;
+                            //get product with id
+                    
+                            $subItemModelInverter = Stockaddition::where(
+                                    [
+                                        ['subitemid', '=', $getProduct->batteries_type],
+                                        ['status', '=', 1],
+                                    ]
+                                )->first();
+                            $orderAmount += $subItemModelInverter->price;
+                            // create order details for inverter and save 
+                            $orderDetails = new ProjectOrderDetails();
+                            $orderDetails->product_type = 0;
+                            $orderDetails->product_id = $subItemModelInverter->id;
+                            $orderDetails->order_id = $projectOrderModel->id;
+                            $orderDetails->project_id = $projectModel->id;
+                            $orderDetails->client_id = $projectModel->clientid;
+                            $orderDetails->status = 1;
+                    
+                            if($orderDetails->save()){
+                                $subItemModelInverter->status = 0;
+                                $subItemModelInverter->save();
+                            }
+
+                        }
+                    }
+                }
+
+
+                
+
+                $projectAmout +=  $orderAmount;
+                $projectOrderModel->amount = $orderAmount;
+                $projectOrderModel->save();
+
+            }
+            $projectModel->price = $projectAmout;
+            if($projectModel->save()){
+                //send email to client now 
+                try{
+
+                    Mail::to($clientModel->email)->send(New ProjectPaymentRequest(["link" => 12345,"firstname" => "Achumie Kingsley"]));
+                    return response()->json(['status'=>'success', 'message'=>'project saved successfully', 'data'=>$projectModel],200);
+               }
+               catch(\Exception $e){
+                return $e;
+               }
+                
+            }
+            return response()->json(['status'=>'error', 'message'=>'Something went wrong', 'data'=>$projectModel],400);
+
+            
+            
+
+        }
+
+
+    }//ends function
 
 
 
