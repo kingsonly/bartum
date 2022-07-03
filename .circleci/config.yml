@@ -20,12 +20,12 @@ jobs:
           name: Install dependencies
           command: composer install
 
-      - run:
-          name: Install  rsync 
-          command: sudo apt-get install rsync
-      - run:
-          name: Update known hosts
-          command: ssh-keyscan -H 192.254.235.94 >> ~/.ssh/known_hosts
+      # - run:
+      #     name: Install  rsync 
+      #     command: sudo apt-get install rsync
+      # - run:
+      #     name: Update known hosts
+      #     command: ssh-keyscan -H 192.254.235.94 >> ~/.ssh/known_hosts
 
       # - run:
       #     name: ssh login  
