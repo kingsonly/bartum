@@ -24,7 +24,7 @@ use App\Mail\ProjectPaymentRequest;
 
 class PaymentController extends Controller
 {
-    public function getprojectbyid($id)
+    public function getprojectpaymentbyid($id)
     {
         $pr = Project::where('id',$id)->first();
         if($pr == null)
@@ -32,13 +32,23 @@ class PaymentController extends Controller
             return response()->json(['status'=>'error', 'message'=>'project not found', 'data'=>''],400);
         }
         else{
-            $cl = new Client();
-            $client =  $cl::where('id', $pr->clientid)->first();
+            
+            $client =  Client::where('id', $pr->clientid)->first();
             $pr->client = $client;
             $pr->product =  Product::where('id',$pr->productid)->first();
-            return response()->json(['status'=>'success', 'message'=>'project fetched successfully', 'data'=>$pr],200);
+            $data = [
+                "amount" => $pr->price,
+                "name" => $client->clientname,
+                "email" => $client->email,
+            ];
+
+            return response()->json(['status'=>'success', 'message'=>'project fetched successfully', 'data'=>$data],200);
         }
     }//ends function
+
+    public function confirmPayment(){
+        
+    }
 
 
 }

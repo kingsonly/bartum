@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'sendmail'),
 
     /*
     |--------------------------------------------------------------------------
@@ -36,7 +36,7 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.sendgrid.net'),
+            'host' => env('MAIL_HOST'),
             'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
@@ -49,9 +49,7 @@ return [
             'transport' => 'ses',
         ],
 
-        'mailgun' => [
-            'transport' => 'mailgun',
-        ],
+        
 
         'postmark' => [
             'transport' => 'postmark',
@@ -70,14 +68,6 @@ return [
         'array' => [
             'transport' => 'array',
         ],
-
-        'failover' => [
-            'transport' => 'failover',
-            'mailers' => [
-                'smtp',
-                'log',
-            ],
-        ],
     ],
 
     /*
@@ -92,8 +82,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS'),
+        'name' => env('MAIL_FROM_NAME'),
     ],
 
     /*
