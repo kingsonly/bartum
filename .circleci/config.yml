@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Directory Listing  
           command: | 
-            ssh bartumen@192.254.235.94 ls
+            ssh bartumen@192.254.235.94 cd api.bartumenergy.com composer install
       - run:
           name: Directory Listing  
           command: ls
