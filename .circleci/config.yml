@@ -23,14 +23,14 @@ jobs:
       - run: sudo apt update
       - run: sudo apt-get install rsync
 
-      # - run:
-      #     name: Update known hosts
-      #     command: ssh-keyscan -H 192.254.235.94 >> ~/.ssh/known_hosts
+      - run:
+          name: Update known hosts
+          command: ssh-keyscan -H 192.254.235.94 >> ~/.ssh/known_hosts
 
-      # - run:
-      #     name: ssh login  
-      #     command: |
-      #       rsync -va --delete dist/ bartumen@192.254.235.94:admin.bartumenergy.com
+      - run:
+          name: ssh login  
+          command: |
+            rsync -va --delete app database phpunit.xml storage artisan public/ tests bootstrap vendor composer.json  docker-compose.yml      resources    webpack.mix.js composer.lock  Dockerfile.dev routes config package.json	server.php bartumen@192.254.235.94:api.bartumenergy.com
       - run:
           name: Directory Listing  
           command: ls
