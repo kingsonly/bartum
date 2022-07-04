@@ -30,7 +30,11 @@ jobs:
       - run:
           name: ssh login  
           command: |
-            rsync -va --delete app database phpunit.xml storage artisan public/ tests bootstrap vendor composer.json  docker-compose.yml      resources    webpack.mix.js composer.lock  Dockerfile.dev routes config package.json	server.php bartumen@192.254.235.94:api.bartumenergy.com
+            rsync -va --delete app database phpunit.xml storage artisan public/ tests bootstrap  composer.json  docker-compose.yml      resources    webpack.mix.js composer.lock  Dockerfile.dev routes config package.json	server.php bartumen@192.254.235.94:api.bartumenergy.com
+      - run:
+          name: Directory Listing  
+          command: | 
+            ssh bartumen@192.254.235.94 cd api.bartumenergy.com ls
       - run:
           name: Directory Listing  
           command: ls
