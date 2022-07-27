@@ -29,6 +29,6 @@ class ProjectPaymentRequest extends Mailable
      */
      public function build()
      {
-        return $this->from('trendysetup@gmail.com',  'Bartum Energy')->subject("Password Creation Link")->view('emails.projectpaymentrequest')->with('data', $this->data);
+        return $this->from('trendysetup@gmail.com',  'Bartum Energy')->subject("Payment request")->view('emails.projectpaymentrequest')->with('data', $this->data);
      }
 }

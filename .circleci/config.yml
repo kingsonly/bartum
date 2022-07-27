@@ -26,11 +26,19 @@ jobs:
       - run:
           name: Update known hosts
           command: ssh-keyscan -H 192.254.235.94 >> ~/.ssh/known_hosts
+      - run:
+          name: find and replace in document
+          command: |
+            sed -i 's:/public/index.php:/index.php' server.php && sed -i 's:..:' public/index.php && sed -i 's:DB_DATABASE=forge:DB_DATABASE=bartumen_forge' .env.sample && sed -i 's:DB_USERNAME=forge:DB_USERNAME=bartumen_forge' .env.sample 
 
+      - run:
+          name: rename .env.sample file to .env 
+          command: |
+            mv .env.sample .env
       - run:
           name: ssh login  
           command: |
-            rsync -va --delete app database phpunit.xml storage artisan public/ tests bootstrap  composer.json  docker-compose.yml      resources    webpack.mix.js composer.lock  Dockerfile.dev routes config package.json	server.php bartumen@192.254.235.94:api.bartumenergy.com
+            rsync -va --delete app database phpunit.xml storage artisan public/ .env tests bootstrap  composer.json  docker-compose.yml      resources    webpack.mix.js composer.lock  Dockerfile.dev routes config package.json	server.php bartumen@192.254.235.94:api.bartumenergy.com
       - run:
           name: Directory Listing  
           command: | 

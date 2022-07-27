@@ -332,20 +332,6 @@ class UserController extends Controller
           }
 
 
-
-          $user = new User();
-          $user->firstname = $request->input('clientname');
-          $user->email = $request->input('email');
-          $user->emailresetcode = $request->input('email');
-          $password =  str_shuffle("abcd98");
-          $encriptedPassword = bcrypt($password);
-          $user->password = $encriptedPassword;
-          $user->passwordresetcode = substr(str_shuffle("01234567893ABCDEFGHIJKLMN01234567893ABCDEFGHIJKLMN"),-10);
-          $user->emailresetcode = substr(str_shuffle("01234567893ABCDEFGHIJKLMN01234567893ABCDEFGHIJKLMN"),-10);
-          $user->reverse = strrev($password);
-          $user->role = 4;
-          $user->save();
-
           $client = new Client();
           $client->clientname = $request->input('clientname');
           $client->clienttype = $request->input('clienttype');
@@ -354,7 +340,7 @@ class UserController extends Controller
           $client->load = $request->input('load');
           $client->housesize = $request->input('housesize');
           $client->address = $request->input('address');
-          $client->userid = $user->id;
+          $client->userid = $id;
           $client->clientcode = str_shuffle('1234567ABC');
           $client->addedby = $id;
           $client->stateid = $request->input('stateid');
@@ -365,25 +351,6 @@ class UserController extends Controller
           $client->state = $state->sname;
           if($client->save())
           {
-
-                     $codex = substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),-3);
-                     $user->passwordresetcode = $codex.str_shuffle('1234567');
-
-                     $user->save();
-                     $data = array(
-                        'firstname' => $user->firstname,
-
-                        'link' => \Config::get('constants.frontend').'/recoverpassword/'.time().$user->passwordresetcode,
-                       );
-
-                      try{
-
-                            Mail::to($user->email)->send(New Forgotpassword($data));
-                       }
-                       catch(\Exception $e){
-
-                       }
-
             return response()->json(['status'=>'success', 'message'=>'Client saved successfully', 'data'=>$client],200);
           }
           else{

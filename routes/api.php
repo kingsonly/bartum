@@ -36,7 +36,10 @@ Route::get('fetchclients', [UserController::class,'fetchclients']);
 Route::get('getclientbyclientid/{id}', [UserController::class,'getclientbyclientid']);
 Route::get('fetchprojects', [ProjectController::class,'fetchprojects']);
 Route::get('getprojectbyid/{id}', [ProjectController::class,'getprojectbyid']);
-Route::get('getprojectpaymentbyid/{id}', [PaymentController::class,'getprojectpaymentbyid']);
+Route::get('paymentrequest/{id}', [PaymentController::class,'getprojectpaymentbyid']);
+Route::post('confirmpayment/{id}/{projectid}', [PaymentController::class,'confirmPayment']);
+Route::get('addpayment', [PaymentController::class,'addPayment']);
+
 Route::get('fetchavailableprojectstatus', [ProjectController::class,'fetchavailableprojectstatus']);
 Route::get('fetchavailableprojecttypes', [ProjectController::class,'fetchavailableprojecttypes']);
 Route::get('fetchmessagesbyprojectid/{projectid}', [MessagesController::class,'fetchmessagesbyprojectid']);
@@ -54,10 +57,11 @@ Route::post('sendpasswordresetlink', [UserController::class, 'sendpasswordresetl
 Route::post('resetpassword', [UserController::class, 'resetpassword']);
 Route::get('confirmemail/{link}', [UserController::class, 'confirmemail'])->name('confirmemail');
 Route::get('fetchadmindashboard', [UserController::class,'fetchadmindashboard']);
-//Route::post('createproject', [ProjectController::class, 'createproject']);
+Route::post('addpayment/{projectid}', [PaymentController::class,'addPayment']);
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::post('shout', [UserController::class, 'shout']);
+    Route::get('deletesubitem/{id}', [InventoryController::class, 'deleteSubitem']);
     Route::post('createproduct', [ProductController::class, 'createproduct']);
     Route::get('fetchproducts', [ProductController::class, 'fetchproducts']);
     Route::post('addclient', [UserController::class, 'addclient']);
@@ -83,7 +87,8 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::post('createsubitem', [InventoryController::class, 'createsubitem']);
     Route::post('editsubitem', [InventoryController::class, 'editsubitem']);
     Route::post('addstock', [InventoryController::class, 'addstock']);
-    Route::post('createproject', [ProjectController::class, 'createproject']);
+    Route::post('createproject', [ProjectController::class, 'createProject']);
+    Route::post('updatestockreff', [InventoryController::class, 'updateStock']);
 });
 
 Route::get('fetchitems', [InventoryController::class,'fetchitems']);
