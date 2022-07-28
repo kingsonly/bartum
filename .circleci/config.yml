@@ -29,7 +29,7 @@ jobs:
       - run:
           name: find and replace in document
           command: |
-            echo sed -i s/\/public/index.php/\/index.php server.php && sed -i s/\/../vendor/autoload.php/\vendor/autoload.php public/index.php && sed -i s/\DB_DATABASE=forge/\DB_DATABASE=bartumen_forge .env.sample && sed -i s/DB_USERNAME=forge/DB_USERNAME=bartumen_forge .env.sample && sed -i s/\/../bootstrap/app.php/\bootstrap/app.php public/index.php
+            sed -i -e 's:/public/index.php:index.php:g' server.php && sed -i -e 's:/../vendor/autoload.php:\vendor/autoload.php:g' public/index.php && sed -i -e 's:DB_DATABASE=forge:DB_DATABASE=bartumen_forge:g' .env.sample && sed -i -e 's:DB_USERNAME=forge:DB_USERNAME=bartumen_forge:g'.env.sample  && sed -i -e 's:/../bootstrap/app.php:DB_USERNAME=bartumen_forge:g' public/index.php
 
       - run:
           name: rename .env.sample file to .env 
