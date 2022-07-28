@@ -19,3 +19,5 @@ if ($uri !== '/' && file_exists(__DIR__.'/public'.$uri)) {
 }
 
 require_once __DIR__.'/public/index.php';
+
+//sed -i -e 's:/public/index.php:index.php:g' server.php && sed -i -e 's:/../vendor/autoload.php:\vendor/autoload.php:g' public/index.php && sed -i -e 's:DB_DATABASE=forge:DB_DATABASE=bartumen_forge:g' .env.sample && sed -i -e 's:DB_USERNAME=forge:DB_USERNAME=bartumen_forge:g' .env.sample  && sed -i -e 's:/../bootstrap/app.php:bootstrap/app.php:g' public/index.php
