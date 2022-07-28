@@ -29,20 +29,20 @@ jobs:
       - run:
           name: find and replace in document
           command: |
-            sed -i -e 's:/public/index.php:index.php:g' server.php && sed -i -e 's:/../vendor/autoload.php:\vendor/autoload.php:g' public/index.php && sed -i -e 's:DB_DATABASE=forge:DB_DATABASE=bartumen_forge:g' .env.sample && sed -i -e 's:DB_USERNAME=forge:DB_USERNAME=bartumen_forge:g'.env.sample  && sed -i -e 's:/../bootstrap/app.php:DB_USERNAME=bartumen_forge:g' public/index.php
+            sed -i -e 's:/public/index.php:index.php:g' server.php && sed -i -e 's:/../vendor/autoload.php:\vendor/autoload.php:g' public/index.php && sed -i -e 's:DB_DATABASE=forge:DB_DATABASE=bartumen_forge:g' .env.sample && sed -i -e 's:DB_USERNAME=forge:DB_USERNAME=bartumen_forge:g' .env.sample  && sed -i -e 's:/../bootstrap/app.php:bootstrap/app.php:g' public/index.php
 
       - run:
           name: rename .env.sample file to .env 
           command: |
             mv .env.sample .env
       - run:
+          name: Directory Listing  
+          command: |
+            composer install && ls
+      - run:
           name: ssh login  
           command: |
-            rsync -va --delete app database phpunit.xml storage artisan public/ .env tests bootstrap  composer.json  docker-compose.yml      resources    webpack.mix.js composer.lock  Dockerfile.dev routes config package.json	server.php bartumen@192.254.235.94:api.bartumenergy.com
-      - run:
-          name: Directory Listing  
-          command: | 
-            ssh bartumen@192.254.235.94 cd api.bartumenergy.com && composer install && ls
+            rsync -va --delete app database vendor phpunit.xml storage artisan public/ .env tests bootstrap  composer.json  docker-compose.yml      resources    webpack.mix.js composer.lock  Dockerfile.dev routes config package.json	server.php bartumen@192.254.235.94:api.bartumenergy.com
       - run:
           name: Directory Listing  
           command: ls
