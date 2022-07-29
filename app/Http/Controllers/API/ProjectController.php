@@ -991,7 +991,7 @@ class ProjectController extends Controller
 
                         }
                     }
-
+                    //return response()->json(['status'=>'success', 'message'=>'project saved successfully', 'data'=>$getProduct->accessories],200);
                     if(!empty($getProduct->accessories)){
                         foreach($getProduct->accessories as $accessoryValue){
                             for($i = 0 ; $i < $accessoryValue->quantity; $i++){
