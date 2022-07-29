@@ -62,6 +62,7 @@ Route::post('addpayment/{projectid}', [PaymentController::class,'addPayment']);
 Route::middleware('auth:sanctum')->group( function () {
     Route::post('shout', [UserController::class, 'shout']);
     Route::get('deletesubitem/{id}', [InventoryController::class, 'deleteSubitem']);
+    Route::get('viewinventorybyitem/{id}', [InventoryController::class, 'viewinventorybyitem']);
     Route::post('createproduct', [ProductController::class, 'createproduct']);
     Route::get('fetchproducts', [ProductController::class, 'fetchproducts']);
     Route::post('addclient', [UserController::class, 'addclient']);
