@@ -297,7 +297,7 @@ class UserController extends Controller
           }
 
           $validator = Validator::make($request->all(),[
-            'email' => 'unique:users',
+            'email' => 'unique',
           ]);
 
           if($validator->fails())
