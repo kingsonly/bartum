@@ -296,9 +296,9 @@ class UserController extends Controller
             return response()->json(['status'=>'error', 'message'=>'phone is required',  'data' =>''],400);
           }
 
-          $validator = Validator::make($request->all(),[
-            'email' => 'unique',
-          ]);
+          // $validator = Validator::make($request->all(),[
+          //   'email' => 'unique:users',
+          // ]);
 
           if($validator->fails())
           {
