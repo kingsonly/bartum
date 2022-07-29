@@ -22,7 +22,7 @@ class ProductController extends Controller
         $loggedinuser = auth()->guard('sanctum')->user();
         $id = $loggedinuser->id;
 
-        return response()->json(['status'=>'error', 'message'=>'this action is for superadmin',  'data' =>$request->input()],400);
+        
         if($loggedinuser->role != 1)
         {
           return response()->json(['status'=>'error', 'message'=>'this action is for superadmin',  'data' =>''],400);
@@ -31,23 +31,26 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(),[
             'productname' => 'required|unique:products',
         ]);
+
         if($validator->fails()){
         return response()->json(['status' => 'error' , 'message'=>'productname  is required and productname must not repeat' , 'data'=>''],400);
         }
-
-        $validator = Validator::make($request->all(),[
-            'numberofpanels' => 'required',
-        ]);
-        if($validator->fails()){
-        return response()->json(['status' => 'error' , 'message'=>'numberofpanels  is required' , 'data'=>''],400);
+        if($request->input('type') == 'default'){
+            $validator = Validator::make($request->all(),[
+                'numberofpanels' => 'required',
+            ]);
+            if($validator->fails()){
+            return response()->json(['status' => 'error' , 'message'=>'numberofpanels  is required' , 'data'=>''],400);
+            }
+    
+            $validator = Validator::make($request->all(),[
+                'numberofbatteries' => 'required',
+            ]);
+            if($validator->fails()){
+            return response()->json(['status' => 'error' , 'message'=>'numberofpanels  is required' , 'data'=>''],400);
+            }
         }
-
-        $validator = Validator::make($request->all(),[
-            'numberofbatteries' => 'required',
-        ]);
-        if($validator->fails()){
-        return response()->json(['status' => 'error' , 'message'=>'numberofpanels  is required' , 'data'=>''],400);
-        }
+        
 
         $product  = new Product();
         if($request->input('type') == 'default'){
@@ -59,7 +62,7 @@ class ProductController extends Controller
             $product->numberofinverters = $request->input('numberofinverters');
         }
 
-        if($request->input('type') == 'light'){
+        if($request->input('type') == 'streetlight'){
             $product->light_type = $request->input('lighttypeid');
             $product->numberoflight = $request->input('numberoflights');
         }
