@@ -35,12 +35,12 @@ class ProductController extends Controller
         return response()->json(['status' => 'error' , 'message'=>'productname  is required and productname must not repeat' , 'data'=>''],400);
         }
 
-        // $validator = Validator::make($request->all(),[
-        //     'numberofpanels' => 'required',
-        // ]);
-        // if($validator->fails()){
-        // return response()->json(['status' => 'error' , 'message'=>'numberofpanels  is required' , 'data'=>''],400);
-        // }
+        $validator = Validator::make($request->all(),[
+            'numberofpanels' => 'required',
+        ]);
+        if($validator->fails()){
+        return response()->json(['status' => 'error' , 'message'=>'numberofpanels  is required' , 'data'=>''],400);
+        }
 
         $validator = Validator::make($request->all(),[
             'numberofbatteries' => 'required',
