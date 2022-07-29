@@ -223,6 +223,36 @@ class InventoryController extends Controller
       return response()->json(['status'=>'success', 'message'=>'inventory fetched with pagination', 'data'=>$data, 'page'=>$page, 'totalpages'=>$totalpages, 'perpage'=>$perpage],200);
   }
 
+
+  public function viewinventorybyitem($id)
+  {
+    // $query = $request->all();
+    // if(array_key_exists('perpage', $query))
+    // {//check if perpage is in query string
+    //     $perpage = $query["perpage"];
+    // }
+    // else {
+    //   $perpage = 100;
+    // }
+
+    //$query = $request->all();
+
+    // if(array_key_exists('page', $query))
+    // {//check if page is in query string
+    //     $page = $query["page"];
+    // }
+    // else {
+    //   $page = 1;
+    // }
+
+
+      $stock = Stockaddition::where("itemid",$id)->get();
+      // $data =   $stock["data"];
+      // $page =   $stock["current_page"];
+      // $totalpages = ceil($stock["total"]/$perpage);
+      return response()->json(['status'=>'success', 'message'=>'inventory fetched without pagination', 'data'=>$stock],200);
+  }
+
   public function getsubitembyid($id)
   {
     $subitem = Subitem::with('item')->where('id', $id)->first();
