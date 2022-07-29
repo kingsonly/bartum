@@ -230,6 +230,8 @@ class InventoryController extends Controller
 
   }
 
+  
+
   public function editsubitem(Request $request)
   {
         $loggedinuser = auth()->guard('sanctum')->user();
@@ -318,7 +320,7 @@ class InventoryController extends Controller
       $st->rating = $request->input('rating');
       $st->name = $request->input('name');
       $st->price = $request->input('price');
-      $st->stockid = $request->input('stockid');
+      //$st->stockid = $request->input('stockid');
 
       if($st->save()){
         $status = true;
