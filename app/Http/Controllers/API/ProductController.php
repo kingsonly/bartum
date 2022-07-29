@@ -22,7 +22,7 @@ class ProductController extends Controller
         $loggedinuser = auth()->guard('sanctum')->user();
         $id = $loggedinuser->id;
 
-        return response()->json(['status'=>'error', 'message'=>'this action is for superadmin',  'data' =>$request],400);
+        return response()->json(['status'=>'error', 'message'=>'this action is for superadmin',  'data' =>$request->input()],400);
         if($loggedinuser->role != 1)
         {
           return response()->json(['status'=>'error', 'message'=>'this action is for superadmin',  'data' =>''],400);
