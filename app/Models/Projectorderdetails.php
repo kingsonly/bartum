@@ -14,3 +14,4 @@ class ProjectOrderDetails extends Model
         return $this->hasMany(Stockaddition::class,'id', 'product_id');
     }
 }
+ 

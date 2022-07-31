@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProjectOrder extends Model
 {
     use HasFactory;
-    public $table = 'project_order';
+    public $table = 'project_order'; 
 
     public function orderaddress(){
         return $this->hasOne(ProjectAddress::class,'id');
