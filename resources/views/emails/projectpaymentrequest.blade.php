@@ -28,8 +28,8 @@
     <br>
     Please Click on the button below to complete your transaction.<br><br>
 
-
-                                      <a href="https://admin.bartumenergy.com/payment/{{{$data['link']}}}" style="text-decoration: none;"> 
+    
+                                      <a href="https://admin.bartumenergy.com/payment-plan/{{{$data['link']}}}" style="text-decoration: none;"> 
                                          <button style="height: 70px;width: 300px;border-radius: 6px;background:rgb(135, 199, 110);color:#fff;font-size:18px"> Make Payment</button> 
                                         </a>
                                         <br><br>
@@ -37,7 +37,7 @@
 
               You can also copy and paste this link into your browser:<br><br>
 
-              https://admin.bartumenergy.com/payment/{{{$data['link']}}}
+              https://admin.bartumenergy.com/payment-plan/{{{$data['link']}}}
 
   <br>
 
