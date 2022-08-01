@@ -250,6 +250,10 @@ class InventoryController extends Controller
       // $data =   $stock["data"];
       // $page =   $stock["current_page"];
       // $totalpages = ceil($stock["total"]/$perpage);
+      foreach($stock as $key => $value){
+        $value->Item;
+        $value->Subitem;
+      }
       return response()->json(['status'=>'success', 'message'=>'inventory fetched without pagination', 'data'=>$stock],200);
   }
 
@@ -409,7 +413,7 @@ class InventoryController extends Controller
    * @return array object 
    */
 
-  public function updateStock(Request $request){
+  public function updateProjectStock(Request $request){
     
     $updateStatus = false;
     foreach(json_decode($request->details) as $value){
