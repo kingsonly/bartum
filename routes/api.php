@@ -89,7 +89,7 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::post('editsubitem', [InventoryController::class, 'editsubitem']);
     Route::post('addstock', [InventoryController::class, 'addstock']);
     Route::post('createproject', [ProjectController::class, 'createProject']);
-    Route::post('updatestockreff', [InventoryController::class, 'updateStock']);
+    Route::post('updatestockreff', [InventoryController::class, 'updateProjectStock']);
 });
 
 Route::get('fetchitems', [InventoryController::class,'fetchitems']);
