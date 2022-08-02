@@ -1106,7 +1106,7 @@ class ProjectController extends Controller
             }
         } catch (\Exception $e) {
             Transactions::rollback();
-            return response()->json(['status'=>'error', 'message'=>'We could not create a project at this time, please try again later (Stop Transaction)', 'data'=>"please you dont have enough batteries to complete this transaction"],400);
+            return response()->json(['status'=>'error', 'message'=>'We could not create a project at this time, please try again later (Stop Transaction)', 'data'=>$e],400);
         }
        
 

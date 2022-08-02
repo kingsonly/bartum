@@ -66,6 +66,8 @@ class ProductController extends Controller
             $product->light_type = $request->input('lighttypeid');
             $product->numberoflight = $request->input('numberoflights');
         }
+
+        $product->product_type = $request->input('type');
         
         $product->productname = $request->input('productname');
         $product->description = $request->input('description');
