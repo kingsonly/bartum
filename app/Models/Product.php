@@ -19,7 +19,7 @@ class Product extends Model
     public function batteriestype(){
         return $this->hasOne(Subitem::class,"id","batteries_type");
     }
-
+    
     public function accessories(){
         return $this->hasMany(Accessories::class,"product_id","id");
     }
