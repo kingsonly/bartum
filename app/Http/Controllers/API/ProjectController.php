@@ -834,23 +834,13 @@ class ProjectController extends Controller
                     ['subitemid', '=', $accessoryValue->subitem_id],
                     ['status', '=', 1],
                 ])->get();
+            $subitem = Subitem::where("id",$accessoryValue->subitem_id)->first();
             if($accessoryValue->quantity * count(json_decode($request->address)) >  count($subItemModelAccessories)){
-                return response()->json(['status'=>'error', 'message'=>"Please create ". ($accessoryValue->quantity * count(json_decode($request->address)) - count($subItemModelAccessories)). " more Accessories with the name ". $subItemModelAccessories->accessories->subitem->name, 'data'=>""],400);
+                return response()->json(['status'=>'error', 'message'=>"Please create ". ($accessoryValue->quantity * count(json_decode($request->address)) - count($subItemModelAccessories)). " more Accessories with the name ". $subitem->name, 'data'=>""],400);
             }
         }
 
-        $subItemModelInverter = Stockaddition::where(
-            [
-                ['subitemid', '=', $getProductCheck->batteries_type],
-                ['status', '=', 1],
-            ]
-        )->get();
-
-        if(count($subItemModelInverter) < $getProductCheck->numberofbatteries * count(json_decode($request->address))){
-            // please you dont have enough batteries to complete this transaction
-            return response()->json(['status'=>'error', 'message'=>'please you dont have enough batteries to complete this transaction', 'data'=>"please you dont have enough batteries to complete this transaction"],400);
-            
-        }
+        
 
 
         $loggedinuser = auth()->guard('sanctum')->user();
