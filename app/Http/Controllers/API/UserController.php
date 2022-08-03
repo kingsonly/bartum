@@ -263,7 +263,7 @@ class UserController extends Controller
         $loggedinuser = auth()->guard('sanctum')->user();
           $id = $loggedinuser->id;
 
-          if($loggedinuser->role != 1)
+          if($loggedinuser->role != 1 || $loggedinuser->role != 2)
           {
             return response()->json(['status'=>'error', 'message'=>'you do not have the privilege for this action',  'data' =>''],400);
           }
