@@ -827,6 +827,31 @@ class ProjectController extends Controller
             
         }
 
+        foreach($getProductCheck->accessories as $accessoryValue){
+            //get product with id
+            $subItemModelAccessories = Stockaddition::where(
+                [
+                    ['subitemid', '=', $accessoryValue->subitem_id],
+                    ['status', '=', 1],
+                ])->get();
+            if($accessoryValue->quantity * count(json_decode($request->address)) >  count($subItemModelAccessories)){
+                return response()->json(['status'=>'error', 'message'=>'please you dont have enough Accessories to complete this transaction', 'data'=>""],400);
+            }
+        }
+
+        $subItemModelInverter = Stockaddition::where(
+            [
+                ['subitemid', '=', $getProductCheck->batteries_type],
+                ['status', '=', 1],
+            ]
+        )->get();
+
+        if(count($subItemModelInverter) < $getProductCheck->numberofbatteries * count(json_decode($request->address))){
+            // please you dont have enough batteries to complete this transaction
+            return response()->json(['status'=>'error', 'message'=>'please you dont have enough batteries to complete this transaction', 'data'=>"please you dont have enough batteries to complete this transaction"],400);
+            
+        }
+
 
         $loggedinuser = auth()->guard('sanctum')->user();
         $id = $loggedinuser->id;
