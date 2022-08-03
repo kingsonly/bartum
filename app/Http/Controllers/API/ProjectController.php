@@ -897,8 +897,11 @@ class ProjectController extends Controller
                 foreach(json_decode($request->address) as $key => $value){
                     $projectAddressModel = new ProjectAddress() ;
                     $projectAddressModel->projects_id = $projectModel->id;
-                    $projectAddressModel->log = $value->log;
-                    $projectAddressModel->lat = $value->lat;
+                    if(isSet($value->log) && !empty($value->log)){
+                        $projectAddressModel->log = $value->log;
+                        $projectAddressModel->lat = $value->lat;
+                    }
+                    
                     $projectAddressModel->client_id = $projectModel->clientid;
                     $projectAddressModel->address_description = $value->address;
                     $projectAddressModel->states_id = $value->states_id;
