@@ -835,7 +835,7 @@ class ProjectController extends Controller
                     ['status', '=', 1],
                 ])->get();
             if($accessoryValue->quantity * count(json_decode($request->address)) >  count($subItemModelAccessories)){
-                return response()->json(['status'=>'error', 'message'=>'please you dont have enough Accessories to complete this transaction', 'data'=>""],400);
+                return response()->json(['status'=>'error', 'message'=>"Please create ". ($accessoryValue->quantity * count(json_decode($request->address)) - count($subItemModelAccessories)). " more Accessories with the name ". $subItemModelAccessories->accessories->subitem->name, 'data'=>""],400);
             }
         }
 
