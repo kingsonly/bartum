@@ -353,7 +353,10 @@ class InventoryController extends Controller
       $st->capacity = $request->input('capacity');
       $st->rating = $request->input('rating');
       $st->name = $request->input('name');
-      $st->price = $request->input('price');
+      $re = "/\\D/"; 
+      $subst = ""; 
+      $price = preg_replace($re, $subst, $request->input('price'));
+      $st->price =  $price;
       //$st->stockid = $request->input('stockid');
 
       if($st->save()){

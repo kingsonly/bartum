@@ -872,7 +872,7 @@ class ProjectController extends Controller
         // note check availability of stuck before entring project
         Transactions::beginTransaction();
         
-        //try {
+        try {
 
             if($projectModel->save()){
                 // after project have been created we then create all instalation address associated with the project 
@@ -1008,8 +1008,9 @@ class ProjectController extends Controller
                                                 ['status', '=', 1],
                                             ]
                                         )->first();
+                                        return response()->json(['status'=>'success', 'message'=>'project saved successfully', 'data'=>$subItemModelAccessories],200);
                                     $orderAmount += $subItemModelAccessories->price;
-                                    // create order details for inverter and save 
+                                    // create order details for subItemModelAccessories and save 
                                     $orderDetails = new ProjectOrderDetails();
                                     $orderDetails->product_type = 0;
                                     $orderDetails->product_id = $subItemModelAccessories->id;
@@ -1084,7 +1085,7 @@ class ProjectController extends Controller
                 $projectModel->price = $amountAfterVatProject;
                 if($projectModel->save()){
                     //send email to client now 
-                    //Transactions::commit();
+                    Transactions::commit();
                     try{
     
                         Mail::to($clientModel->email)->send(New ProjectPaymentRequest(["link" => $projectModel->id,"firstname" => $clientModel->clientname,"amount" => $projectModel->price]));
@@ -1102,12 +1103,12 @@ class ProjectController extends Controller
                 
     
             }else{
-                return response()->json(['status'=>'error', 'message'=>'We could not create a project at this time, please try again later (Project not saved)', 'data'=>""],400);
+                return response()->json(['status'=>'error', 'message'=>'We could not create a project at this time, please try again later (Project not saved)', 'data'=>"please you dont have enough batteries to complete this transaction"],400);
             }
-        // } catch (\Exception $e) {
-        //     Transactions::rollback();
-        //     return response()->json(['status'=>'error', 'message'=>'We could not create a project at this time, please try again later (Stop Transaction)', 'data'=>$e],400);
-        // }
+        } catch (\Exception $e) {
+            Transactions::rollback();
+            return response()->json(['status'=>'error', 'message'=>'We could not create a project at this time, please try again later (Stop Transaction)', 'data'=>$e],400);
+        }
        
 
 
