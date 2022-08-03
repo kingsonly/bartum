@@ -1008,8 +1008,9 @@ class ProjectController extends Controller
                                                 ['status', '=', 1],
                                             ]
                                         )->first();
+                                        return response()->json(['status'=>'success', 'message'=>'project saved successfully', 'data'=>$subItemModelAccessories],200);
                                     $orderAmount += $subItemModelAccessories->price;
-                                    // create order details for inverter and save 
+                                    // create order details for subItemModelAccessories and save 
                                     $orderDetails = new ProjectOrderDetails();
                                     $orderDetails->product_type = 0;
                                     $orderDetails->product_id = $subItemModelAccessories->id;

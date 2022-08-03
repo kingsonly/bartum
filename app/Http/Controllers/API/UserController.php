@@ -455,6 +455,7 @@ class UserController extends Controller
           }
 
           $client->clientname = $request->input('clientname');
+          $client->email = $request->input('email');
           $client->clienttype = $request->input('clienttype');
           $client->phone = $request->input('phone');
           $client->load = $request->input('load');
