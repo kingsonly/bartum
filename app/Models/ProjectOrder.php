@@ -17,6 +17,10 @@ class ProjectOrder extends Model
     public function orderdetails(){
         return $this->hasMany(ProjectOrderDetails::class,'order_id');
     } 
+
+    public function payments(){
+        return $this->hasMany(Payment::class,"order_id","id");
+    }
     
 
     
