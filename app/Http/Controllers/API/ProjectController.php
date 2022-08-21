@@ -49,21 +49,28 @@ class ProjectController extends Controller
         $pr = Project::where('id',$id)->first();
         $installationsModel = $pr->installations;
 
-        
+        $pr->payments;
         foreach($installationsModel as $order){
             $order->orderaddress->state->sname;
             $order->orderaddress->lga->lganame;
             $order->orderdetails;
+           
             $data = [
                 "inverter" =>[],
                 "pannel"=>[],
                 "batteries"=>[],
                 "accessories" => [],
                 "street_light" => [],
-                "gas" => [] 
+                "gas" => [],
+                "payment" => [],
             ];
             
             $neworder = $order;
+            $neworder->payments;
+            // foreach($neworder->payments as $payment){
+            //     array_push($data["payment"],$payment);
+            // }
+
             foreach($order->orderdetails as $orderProductDetails){
                 
                 // if the item is an inverter then push to inverter subarray
@@ -710,14 +717,6 @@ class ProjectController extends Controller
                      $subitemtoreduce->save();
 
                }
-
-
-
-
-
-
-
-
 
           $statement = "Edited Project  with name ". $project->projectname;
           $changes =  json_encode($project->getChanges());
