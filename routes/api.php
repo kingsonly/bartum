@@ -58,6 +58,7 @@ Route::post('resetpassword', [UserController::class, 'resetpassword']);
 Route::get('confirmemail/{link}', [UserController::class, 'confirmemail'])->name('confirmemail');
 Route::get('fetchadmindashboard', [UserController::class,'fetchadmindashboard']);
 Route::post('addpayment/{projectid}', [PaymentController::class,'addPayment']);
+Route::get('getallmiscellaneous', [ProjectController::class,'getAllMiscellaneous']);
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::post('shout', [UserController::class, 'shout']);

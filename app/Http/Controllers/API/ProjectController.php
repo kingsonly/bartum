@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB as Transactions;
 use Validator;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Miscellaneous;
 use Illuminate\Support\Facades\Mail;
 use URL;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,7 @@ use App\Mail\ProjectPaymentRequest;
 use App\Models\ProjectAddress;
 use App\Models\ProjectOrder;
 use App\Models\ProjectOrderDetails;
+use App\Models\ProjectMiscellaneous;
 
 
 
@@ -1085,7 +1087,10 @@ class ProjectController extends Controller
                     }
     
     
-                    
+                    // foreach($request->input('miscellaneous') as $key => $value ){
+                    //     $model = new ProjectMiscellaneous();
+                    //     $model->project
+                    // }
                     
                     $projectAmout +=  $orderAmount;
                     $actualOrderAmount = $orderAmount;
@@ -1142,6 +1147,15 @@ class ProjectController extends Controller
             return response()->json(['status'=>'success', 'message'=>'Longitude and Latitude have been updated successfully. ', 'data'=>$model],200);
         }
         return response()->json(['status'=>'error', 'message'=>'We could not update the Longitude and Latitude', 'data'=>$projectModel],400);
+    }
+    public function getAllMiscellaneous(){
+        $model = new Miscellaneous();
+        $fetchMiscellaneous = $model->where('status', 1)->get();
+        if(!empty($fetchMiscellaneous)){
+            return response()->json(['status'=>'success', 'message'=>'All miscellaneous was fetch successfully',  'data' =>$fetchMiscellaneous],200);
+        }
+        return response()->json(['status'=>'error', 'message'=>'something whent wrong when trying to fetch all all miscellaneous',  'data' =>$fetchMiscellaneous],400);
+       
     }
 
 
