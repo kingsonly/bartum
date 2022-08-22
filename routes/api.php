@@ -90,6 +90,7 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::post('addstock', [InventoryController::class, 'addstock']);
     Route::post('createproject', [ProjectController::class, 'createProject']);
     Route::post('updatestockreff', [InventoryController::class, 'updateProjectStock']);
+    Route::post('updategeoaddress/{id}', [ProjectController::class, 'updateGeoAddress']);
 });
 
 Route::get('fetchitems', [InventoryController::class,'fetchitems']);

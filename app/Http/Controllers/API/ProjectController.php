@@ -1132,6 +1132,17 @@ class ProjectController extends Controller
 
     }//ends function
 
+    public function updateGeoAddress(Request $request, $id){
+        $model = ProjectAddress::where("id",$id)->first();
+        // effect the update of the latitude and longitude
+        $model->log = $request->input("log");
+        $model->lat = $request->input("lat");
+        if($model->save()){
+            return response()->json(['status'=>'success', 'message'=>'Longitude and Latitude have been updated successfully. ', 'data'=>$model],200);
+        }
+        return response()->json(['status'=>'error', 'message'=>'We could not update the Longitude and Latitude', 'data'=>$projectModel],400);
+    }
+
 
 
 
