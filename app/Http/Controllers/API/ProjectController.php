@@ -39,6 +39,7 @@ class ProjectController extends Controller
                $cl = new Client();
                $client =  $cl::where('id', $one->clientid)->first();
                $one->client = $client;
+               $one->projectnumber =  $one->projectcode."-".$client->clientcode;
                $pr[] = $one;
         }
         return response()->json(['status'=>'success', 'message'=>'projects fetched successfully', 'data'=>$pr],200);
