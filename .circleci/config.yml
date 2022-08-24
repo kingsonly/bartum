@@ -46,7 +46,7 @@ jobs:
       - run:
           name: ssh and run migration on live server  
           command: |
-            ssh bartumen@192.254.235.94 && cd devapi.bartumenergy.com &&  php artisan migrate
+            ssh bartumen@192.254.235.94 && cd devapi.bartumenergy.com &&  php artisan migrate && ls && exit
       - run:
           name: Directory Listing  
           command: ls
