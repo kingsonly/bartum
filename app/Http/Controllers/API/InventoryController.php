@@ -120,7 +120,7 @@ class InventoryController extends Controller
 
   public function fetchitems()
   {
-    $items = Item::where()->all();
+    $items = Item::all();
     return response()->json(['status'=>'success', 'message'=>'items fetched', 'data'=>$items],200);
   }
 
@@ -203,7 +203,7 @@ class InventoryController extends Controller
         $perpage = $query["perpage"];
     }
     else {
-      $perpage = 100;
+      $perpage = 10;
     }
 
     $query = $request->all();
@@ -215,8 +215,24 @@ class InventoryController extends Controller
       $page = 1;
     }
 
+   
 
-      $stock = Stockaddition::with('subitem', 'item',  'Addedby')->paginate($perpage)->toarray();
+    if(!empty($query["status"]) and $query["status"] != "all"){
+      $statusCode = 0;
+      if($query["status"] == "available"){
+        $statusCode = 1;
+      }
+      $stock = Stockaddition::where([
+        "itemid" => $query["id"],
+        "status" => $statusCode,
+      ])->with('subitem', 'item',  'Addedby')->paginate($perpage)->toarray();
+    }else{
+      
+      $stock = Stockaddition::where([
+        "itemid" => $query["id"],
+      ])->with('subitem', 'item',  'Addedby')->paginate($perpage)->toarray();
+    }
+      
       $data =   $stock["data"];
       $page =   $stock["current_page"];
       $totalpages = ceil($stock["total"]/$perpage);

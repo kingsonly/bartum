@@ -99,7 +99,7 @@ Route::get('getitembyid/{id}', [InventoryController::class,'getitembyid']);
 Route::get('fetchsubitems', [InventoryController::class, 'fetchsubitems']);
 Route::get('getsubitembyid/{id}', [InventoryController::class,'getsubitembyid']);
 Route::get('viewavailablestocks', [InventoryController::class, 'viewavailablestocks']);
-Route::get('viewinventory', [InventoryController::class, 'viewinventory']);
+Route::post('viewinventory', [InventoryController::class, 'viewinventory']);
 Route::get('viewstockentries', [InventoryController::class, 'viewstockentries']);
 Route::get('fetchaudittrail', [InventoryController::class, 'fetchaudittrail']);
 Route::get('getsubitemsbyitemid/{id}', [InventoryController::class, 'getsubitemsbyitemid']);
