@@ -1082,18 +1082,23 @@ class ProjectController extends Controller
                         
     
                         }
+
+                        foreach(json_decode($request->input('miscellaneous')) as $key => $value ){
+                            $model = new ProjectMiscellaneous();
+                            $model->project_id = $projectModel->id;
+                            $model->miscellaneous_id = $value->miscellaneous_id;
+                            $model->amount = $value->amount/count($getAddress);
+                            $orderAmount += $value->amount/count($getAddress);
+                            $model->status = 1;
+                            $model->save();
+                        }
     
                         // add and accessories to project , implement discount and also add vat to the implementation
                     }
     
     
-                    // foreach($request->input('miscellaneous') as $key => $value ){
-                    //     $model = new ProjectMiscellaneous();
-                    //     $model->project
-                    // }
-                    
                     $projectAmout +=  $orderAmount;
-                    $actualOrderAmount = $orderAmount;
+                    //$actualOrderAmount = $orderAmount;
                     $amountAfterDiscount = $orderAmount - ($orderAmount * $request->discount / 100);
                     $amountAfterVat = $amountAfterDiscount + ($amountAfterDiscount * 7.5 / 100);
                     $projectOrderModel->amount = $amountAfterVat;
@@ -1101,6 +1106,9 @@ class ProjectController extends Controller
                     $projectOrderModel->save();
     
                 }
+
+
+                
                 
                 $projectModel->actual_amount = $projectAmout;
                 $amountAfterDiscountProject = $projectAmout - ($projectAmout * $request->discount / 100);
@@ -1121,6 +1129,7 @@ class ProjectController extends Controller
                    }
                     
                 }
+
                 return response()->json(['status'=>'error', 'message'=>'Something went wrong', 'data'=>$projectModel],400);
     
                 
