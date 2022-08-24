@@ -120,7 +120,7 @@ class InventoryController extends Controller
 
   public function fetchitems()
   {
-    $items = Item::all();
+    $items = Item::where()->all();
     return response()->json(['status'=>'success', 'message'=>'items fetched', 'data'=>$items],200);
   }
 
@@ -447,10 +447,5 @@ class InventoryController extends Controller
       return response()->json(['status' => 'error' , 'message'=>'subitem  does not exist, check id' , 'data'=>$subitem],400);
     }
   }
-
-
-
-
-
 
 }

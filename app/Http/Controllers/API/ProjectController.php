@@ -1086,6 +1086,7 @@ class ProjectController extends Controller
                         foreach(json_decode($request->input('miscellaneous')) as $key => $value ){
                             $model = new ProjectMiscellaneous();
                             $model->project_id = $projectModel->id;
+                            $model->order_id = $projectOrderModel->id;
                             $model->miscellaneous_id = $value->miscellaneous_id;
                             $model->amount = $value->amount/count($getAddress);
                             $orderAmount += $value->amount/count($getAddress);

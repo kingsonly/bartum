@@ -16,6 +16,7 @@ class CreateProjectMiscellaneous extends Migration
         Schema::create('project_miscellaneous', function (Blueprint $table) {
             $table->id();
             $table->integer('project_id');
+            $table->integer('order_id');
             $table->integer('miscellaneous_id');
             $table->string('amount');
             $table->integer('status');
