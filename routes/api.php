@@ -58,6 +58,7 @@ Route::post('resetpassword', [UserController::class, 'resetpassword']);
 Route::get('confirmemail/{link}', [UserController::class, 'confirmemail'])->name('confirmemail');
 Route::get('fetchadmindashboard', [UserController::class,'fetchadmindashboard']);
 Route::post('addpayment/{projectid}', [PaymentController::class,'addPayment']);
+Route::get('getallmiscellaneous', [ProjectController::class,'getAllMiscellaneous']);
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::post('shout', [UserController::class, 'shout']);
@@ -98,7 +99,7 @@ Route::get('getitembyid/{id}', [InventoryController::class,'getitembyid']);
 Route::get('fetchsubitems', [InventoryController::class, 'fetchsubitems']);
 Route::get('getsubitembyid/{id}', [InventoryController::class,'getsubitembyid']);
 Route::get('viewavailablestocks', [InventoryController::class, 'viewavailablestocks']);
-Route::get('viewinventory', [InventoryController::class, 'viewinventory']);
+Route::post('viewinventory', [InventoryController::class, 'viewinventory']);
 Route::get('viewstockentries', [InventoryController::class, 'viewstockentries']);
 Route::get('fetchaudittrail', [InventoryController::class, 'fetchaudittrail']);
 Route::get('getsubitemsbyitemid/{id}', [InventoryController::class, 'getsubitemsbyitemid']);

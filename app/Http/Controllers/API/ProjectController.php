@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB as Transactions;
 use Validator;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Miscellaneous;
 use Illuminate\Support\Facades\Mail;
 use URL;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,7 @@ use App\Mail\ProjectPaymentRequest;
 use App\Models\ProjectAddress;
 use App\Models\ProjectOrder;
 use App\Models\ProjectOrderDetails;
+use App\Models\ProjectMiscellaneous;
 
 
 
@@ -1080,15 +1082,24 @@ class ProjectController extends Controller
                         
     
                         }
+
+                        foreach(json_decode($request->input('miscellaneous')) as $key => $value ){
+                            $model = new ProjectMiscellaneous();
+                            $model->project_id = $projectModel->id;
+                            $model->order_id = $projectOrderModel->id;
+                            $model->miscellaneous_id = $value->miscellaneous_id;
+                            $model->amount = $value->amount/count($getAddress);
+                            $orderAmount += $value->amount/count($getAddress);
+                            $model->status = 1;
+                            $model->save();
+                        }
     
                         // add and accessories to project , implement discount and also add vat to the implementation
                     }
     
     
-                    
-                    
                     $projectAmout +=  $orderAmount;
-                    $actualOrderAmount = $orderAmount;
+                    //$actualOrderAmount = $orderAmount;
                     $amountAfterDiscount = $orderAmount - ($orderAmount * $request->discount / 100);
                     $amountAfterVat = $amountAfterDiscount + ($amountAfterDiscount * 7.5 / 100);
                     $projectOrderModel->amount = $amountAfterVat;
@@ -1096,6 +1107,9 @@ class ProjectController extends Controller
                     $projectOrderModel->save();
     
                 }
+
+
+                
                 
                 $projectModel->actual_amount = $projectAmout;
                 $amountAfterDiscountProject = $projectAmout - ($projectAmout * $request->discount / 100);
@@ -1116,6 +1130,7 @@ class ProjectController extends Controller
                    }
                     
                 }
+
                 return response()->json(['status'=>'error', 'message'=>'Something went wrong', 'data'=>$projectModel],400);
     
                 
@@ -1142,6 +1157,15 @@ class ProjectController extends Controller
             return response()->json(['status'=>'success', 'message'=>'Longitude and Latitude have been updated successfully. ', 'data'=>$model],200);
         }
         return response()->json(['status'=>'error', 'message'=>'We could not update the Longitude and Latitude', 'data'=>$projectModel],400);
+    }
+    public function getAllMiscellaneous(){
+        $model = new Miscellaneous();
+        $fetchMiscellaneous = $model->where('status', 1)->get();
+        if(!empty($fetchMiscellaneous)){
+            return response()->json(['status'=>'success', 'message'=>'All miscellaneous was fetch successfully',  'data' =>$fetchMiscellaneous],200);
+        }
+        return response()->json(['status'=>'error', 'message'=>'something whent wrong when trying to fetch all all miscellaneous',  'data' =>$fetchMiscellaneous],400);
+       
     }
 
 
