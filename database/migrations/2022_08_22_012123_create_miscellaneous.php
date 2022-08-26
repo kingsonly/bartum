@@ -17,6 +17,7 @@ class CreateMiscellaneous extends Migration
             $table->id();
             $table->string('title');
             $table->integer('status');
+            $table->softDeletes($column = 'deleted_at', $precision = 0);
             $table->timestamps();
         });
     }

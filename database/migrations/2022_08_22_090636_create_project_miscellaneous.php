@@ -20,6 +20,7 @@ class CreateProjectMiscellaneous extends Migration
             $table->integer('miscellaneous_id');
             $table->string('amount');
             $table->integer('status');
+            $table->softDeletes($column = 'deleted_at', $precision = 0);
             $table->timestamps();
         });
     }
