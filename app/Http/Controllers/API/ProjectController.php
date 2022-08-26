@@ -49,10 +49,11 @@ class ProjectController extends Controller
 
     public function getprojectbyid($id)
     {
-        $pr = Project::where('id',$id)->first();
+        $pr = Project::where('id',$id)->with("miscallaneous")->first();
         $installationsModel = $pr->installations;
 
         $pr->payments;
+        //if() ->with("miscalleneous")
         foreach($installationsModel as $order){
             $order->orderaddress->state->sname;
             $order->orderaddress->lga->lganame;

@@ -18,5 +18,8 @@ class Project extends Model
     public function payments(){
         return $this->hasMany(Payment::class,"project_id","id");
     }
+    public function miscallaneous(){
+        return $this->hasMany(ProjectMiscellaneous::class,"project_id","id");
+    }
 }
 
