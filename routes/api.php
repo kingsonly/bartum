@@ -8,6 +8,7 @@ use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\MessagesController;
 use App\Http\Controllers\API\InventoryController;
 use App\Http\Controllers\API\PaymentController;
+use App\Http\Controllers\API\MiscellaneousController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,6 @@ Route::get('fetchprojects', [ProjectController::class,'fetchprojects']);
 Route::get('getprojectbyid/{id}', [ProjectController::class,'getprojectbyid']);
 Route::get('paymentrequest/{id}', [PaymentController::class,'getprojectpaymentbyid']);
 Route::post('confirmpayment/{id}/{projectid}', [PaymentController::class,'confirmPayment']);
-Route::get('addpayment', [PaymentController::class,'addPayment']);
 
 Route::get('fetchavailableprojectstatus', [ProjectController::class,'fetchavailableprojectstatus']);
 Route::get('fetchavailableprojecttypes', [ProjectController::class,'fetchavailableprojecttypes']);
@@ -61,6 +61,7 @@ Route::post('addpayment/{projectid}', [PaymentController::class,'addPayment']);
 Route::get('getallmiscellaneous', [ProjectController::class,'getAllMiscellaneous']);
 
 Route::middleware('auth:sanctum')->group( function () {
+    Route::resource('mis', MiscellaneousController::class);
     Route::post('shout', [UserController::class, 'shout']);
     Route::get('deletesubitem/{id}', [InventoryController::class, 'deleteSubitem']);
     Route::get('viewinventorybyitem/{id}', [InventoryController::class, 'viewinventorybyitem']);
