@@ -1161,20 +1161,4 @@ class ProjectController extends Controller
         }
         return response()->json(['status'=>'error', 'message'=>'We could not update the Longitude and Latitude', 'data'=>$projectModel],400);
     }
-    public function getAllMiscellaneous(){
-        $model = new Miscellaneous();
-        $fetchMiscellaneous = $model->where('status', 1)->get();
-        if(!empty($fetchMiscellaneous)){
-            return response()->json(['status'=>'success', 'message'=>'All miscellaneous was fetch successfully',  'data' =>$fetchMiscellaneous],200);
-        }
-        return response()->json(['status'=>'error', 'message'=>'something whent wrong when trying to fetch all all miscellaneous',  'data' =>$fetchMiscellaneous],400);
-       
-    }
-
-
-
-
-
-
-
 }
