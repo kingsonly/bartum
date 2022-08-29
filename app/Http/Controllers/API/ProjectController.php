@@ -53,7 +53,7 @@ class ProjectController extends Controller
         $installationsModel = $pr->installations;
 
         $pr->payments;
-        //if() ->with("miscalleneous")
+        
         foreach($installationsModel as $order){
             $order->orderaddress->state->sname;
             $order->orderaddress->lga->lganame;
@@ -790,7 +790,10 @@ class ProjectController extends Controller
 
     public function createProject(Request $request)
      {
+        //check that the unique option which would determin if produn id is available
+        if(!empty($request->input('productid'))){
 
+        }
         $getProductCheck = Product::where("id",$request->input('productid'))->first();
         $subItemModelInverter = Stockaddition::where(
             [
