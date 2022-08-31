@@ -203,7 +203,7 @@ class InventoryController extends Controller
         $perpage = $query["perpage"];
     }
     else {
-      $perpage = 10;
+      $perpage = 100;
     }
 
     $query = $request->all();
@@ -222,21 +222,22 @@ class InventoryController extends Controller
       if($query["status"] == "available"){
         $statusCode = 1;
       }
-      $stock = Stockaddition::where([
+      $stockDetails = Stockaddition::where([
         "itemid" => $query["id"],
         "status" => $statusCode,
-      ])->with('subitem', 'item',  'Addedby')->paginate($perpage)->toarray();
+      ])->with('subitem', 'item',  'Addedby');
     }else{
       
-      $stock = Stockaddition::where([
+      $stockDetails = Stockaddition::where([
         "itemid" => $query["id"],
-      ])->with('subitem', 'item',  'Addedby')->paginate($perpage)->toarray();
+      ])->with('subitem', 'item',  'Addedby');
     }
-      
+      $counter = $stockDetails->count();
+      $stock = $stockDetails->paginate($perpage)->toarray();
       $data =   $stock["data"];
       $page =   $stock["current_page"];
       $totalpages = ceil($stock["total"]/$perpage);
-      return response()->json(['status'=>'success', 'message'=>'inventory fetched with pagination', 'data'=>$data, 'page'=>$page, 'totalpages'=>$totalpages, 'perpage'=>$perpage],200);
+      return response()->json(['status'=>'success', 'message'=>'inventory fetched with pagination', 'data'=>$data, 'page'=>$page, 'totalpages'=>$totalpages, 'perpage'=>$perpage, "total" => $counter ],200);
   }
 
 
