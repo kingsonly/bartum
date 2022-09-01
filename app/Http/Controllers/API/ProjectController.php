@@ -53,6 +53,9 @@ class ProjectController extends Controller
         $installationsModel = $pr->installations;
 
         $pr->payments;
+        foreach($pr->miscallaneous as $key => $value){
+            $value->mainmiscallaneous;
+        }
         
         foreach($installationsModel as $order){
             $order->orderaddress->state->sname;

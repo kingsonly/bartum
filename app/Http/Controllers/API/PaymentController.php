@@ -33,6 +33,10 @@ class PaymentController extends Controller
                 "amount" => $pr->price,
                 "name" => $client->clientname,
                 "email" => $client->email,
+                "amount_paid" => $pr->payments->sum('amount'),
+                "mode_ofPayment" => 	$pr->mode_of_payment,
+                "duration_of_payment" => $pr->payment_duration,
+                "type_of_payment" => $pr->type_of_payment,
             ];
 
             return response()->json(['status'=>'success', 'message'=>'project fetched successfully', 'data'=>$data],200);
