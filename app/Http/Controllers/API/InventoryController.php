@@ -109,7 +109,7 @@ class InventoryController extends Controller
 
   public function getitembyid($id)
   {
-    $item = Item::where('id', $id)->orderBy('id', 'asc')->first();
+    $item = Item::where('id', $id)->orderBy('id', 'desc')->first();
     if($item !== null){
       return response()->json(['status'=>'success', 'message'=>'item fetched', 'data'=>$item],200);
     }else{
@@ -120,7 +120,7 @@ class InventoryController extends Controller
 
   public function fetchitems()
   {
-    $items = Item::orderBy('id', 'asc')->all();
+    $items = Item::orderBy('id', 'desc')->all();
     return response()->json(['status'=>'success', 'message'=>'items fetched', 'data'=>$items],200);
   }
 
@@ -159,7 +159,7 @@ class InventoryController extends Controller
     }
 
 
-    $subitems = Subitem::with('item')->where('trashed',0)->orderBy('id', 'asc')->paginate($perpage)->toarray();
+    $subitems = Subitem::with('item')->where('trashed',0)->orderBy('id', 'desc')->paginate($perpage)->toarray();
     $data = $subitems["data"];
     $page = $subitems["current_page"];
     $totalpages = ceil($subitems["total"]/$perpage);
@@ -187,7 +187,7 @@ class InventoryController extends Controller
     }
 
 
-      $subitems = Stockaddition::with('subitem', 'item',  'Addedby')->orderBy('id', 'asc')->where('status',1)->paginate($perpage)->toarray();
+      $subitems = Stockaddition::with('subitem', 'item',  'Addedby')->orderBy('id', 'desc')->where('status',1)->paginate($perpage)->toarray();
       $data = $subitems["data"];
       $page = $subitems["current_page"];
       $totalpages = ceil($subitems["total"]/$perpage);
@@ -320,7 +320,7 @@ class InventoryController extends Controller
     // }
 
 
-      $stock = Stockaddition::where("itemid",$id)->orderBy('id', 'asc')->get();
+      $stock = Stockaddition::where("itemid",$id)->orderBy('id', 'desc')->get();
       // $data =   $stock["data"];
       // $page =   $stock["current_page"];
       // $totalpages = ceil($stock["total"]/$perpage);
@@ -481,7 +481,7 @@ class InventoryController extends Controller
 
   public function getsubitemsbyitemid($itemid)
   {
-    $subitems = Subitem::where('itemid', $itemid)->orderby('name','asc')->get();
+    $subitems = Subitem::where('itemid', $itemid)->orderby('name','desc')->get();
     return response()->json(['status'=>'success', 'message'=>'subitems fetched', 'data'=>$subitems],200);
   }
 
