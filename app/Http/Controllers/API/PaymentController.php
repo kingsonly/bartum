@@ -69,8 +69,8 @@ class PaymentController extends Controller
                 $paymentModel->amount = $amountPaid;
                 $paymentModel->actual_amount = $actualAmount;
                 $paymentModel->status = 1;
-                $projectModel->mode_of_payment = $request->modeofpayment;
-                $projectModel->type_of_payment = $request->typeofpayment;
+                $paymentModel->mode_of_payment = $request->modeofpayment;
+                $paymentModel->type_of_payment = $request->typeofpayment;
                 if($request->paymentduration > 0){
                     $projectModel->payment_duration = date('d/m/Y', strtotime('+'.$request->paymentduration.' months'));
                 }else{
