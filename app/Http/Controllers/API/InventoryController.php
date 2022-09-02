@@ -232,7 +232,7 @@ class InventoryController extends Controller
 
 
   public function viewinventory(Request $request)
-  {
+  { 
     $query = $request->all();
     if(array_key_exists('perpage', $query))
     {//check if perpage is in query string
