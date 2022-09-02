@@ -68,6 +68,7 @@ class PaymentController extends Controller
                 $paymentModel->project_id = $projectid;
                 $paymentModel->amount = $amountPaid;
                 $paymentModel->actual_amount = $actualAmount;
+                $paymentModel->order_id = 0;
                 $paymentModel->status = 1;
                 $paymentModel->mode_of_payment = $request->modeofpayment;
                 $paymentModel->type_of_payment = $request->typeofpayment;
