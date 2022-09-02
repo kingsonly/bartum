@@ -18,7 +18,6 @@ class CreatePaymentTable extends Migration
             $table->string('amount');
             $table->string('actual_amount');
             $table->string('type_of_payment');
-            $table->string('mode_of_payment');
             $table->integer('order_id');
             $table->integer('project_id');
             $table->integer('status');
