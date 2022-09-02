@@ -197,17 +197,6 @@ class InventoryController extends Controller
   public function editStock(Request $request ,$id){
     
     $model = Stockaddition::where("id",$id)->first();
-    
-    $validated = Validator::make($request->all(),[
-      'subitemid' => 'required|unique:posts|max:255',
-      'itemid' => 'required',
-      'capacity' => 'required',
-      'name' => 'required',
-      'price' => 'required',
-      'status' => 'required',
-      'rating' => 'required',
-      'stockid' => 'required',
-    ]);
 
     $validator = Validator::make($request->all(),[
       'subitemid' => 'required',
@@ -225,29 +214,19 @@ class InventoryController extends Controller
       return response()->json(['status' => 'error' , 'message'=>'itemid  is required' ],400);
     }
 
-
-
-    
-
-    if(!empty($request->all())){
+    $model->subitemid = $request->input("subitemid");
+    $model->itemid = $request->input("itemid");
+    $model->capacity = $request->input("capacity");
+    $model->name = $request->input("name");
+    $model->price = $request->input("price");
+    $model->status = $request->input("status");
+    $model->rating = $request->input("rating");
+    $model->stockid = $request->input("stockid");
+    if($model->save()){
       return response()->json(['status'=>'success', 'message'=>'Stock updated successfully', 'data'=>$model, ],200);
-      $model->subitemid = $request->input("subitemid");
-      $model->itemid = $request->input("itemid");
-      $model->capacity = $request->input("capacity");
-      $model->name = $request->input("name");
-      $model->price = $request->input("price");
-      $model->status = $request->input("status");
-      $model->rating = $request->input("rating");
-      $model->stockid = $request->input("stockid");
-      if($model->save()){
-        return response()->json(['status'=>'success', 'message'=>'Stock updated successfully', 'data'=>$model, ],200);
-      }else{
-        return response()->json(['status'=>'error', 'message'=>'something went wrong please retry', 'data'=>$model, ],400);
-      }
     }else{
-      return response()->json(['status'=>'error', 'message'=>'please no  field can be left empty  ', 'data'=>$validated, ],400);
+      return response()->json(['status'=>'error', 'message'=>'something went wrong please retry', 'data'=>$model, ],400);
     }
-    
 
   }
 
