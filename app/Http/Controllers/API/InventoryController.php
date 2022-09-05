@@ -120,7 +120,7 @@ class InventoryController extends Controller
 
   public function fetchitems()
   {
-    $items = Item::orderBy('id', 'desc')->all();
+    $items = Item::orderBy('id', 'desc')->get();
     return response()->json(['status'=>'success', 'message'=>'items fetched', 'data'=>$items],200);
   }
 
