@@ -76,7 +76,7 @@ jobs:
       - run:
           name: find and replace in document
           command: |
-            sed -i -e 's:/public/index.php:/index.php:g' server.php && sed -i -e 's:/../vendor/autoload.php:/vendor/autoload.php:g' public/index.php && sed -i -e 's:DB_DATABASE=forge:DB_DATABASE=bartumen_forge_dev:g' .env.sample && sed -i -e 's:DB_USERNAME=forge:DB_USERNAME=bartumen_forge:g' .env.sample  && sed -i -e 's:/../bootstrap/app.php:/bootstrap/app.php:g' public/index.php
+            sed -i -e 's:/public/index.php:/index.php:g' server.php && sed -i -e 's:/../vendor/autoload.php:/vendor/autoload.php:g' public/index.php && sed -i -e 's:DB_DATABASE=forge:DB_DATABASE=bartumen_forge:g' .env.sample && sed -i -e 's:DB_USERNAME=forge:DB_USERNAME=bartumen_forge:g' .env.sample  && sed -i -e 's:/../bootstrap/app.php:/bootstrap/app.php:g' public/index.php
 
       - run:
           name: rename .env.sample file to .env 
