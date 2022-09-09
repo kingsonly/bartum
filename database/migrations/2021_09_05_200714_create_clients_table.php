@@ -29,6 +29,8 @@ class CreateClientsTable extends Migration
             $table->string('state')->nullable();
             $table->integer('userid')->nullable();
             $table->string('clientcode')->nullable();
+            $table->string('lgaid')->nullable();
+            $table->string('lga')->nullable();
             $table->string('addedby')->nullable()->comment('userid of who added');
         });
     }

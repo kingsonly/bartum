@@ -16,7 +16,7 @@ services:
       - ./bootstrap:/app/bootstrap
       - ./config:/app/config
       - ./database:/app/database
-      - ./public:/app/public
+      - ./public:/app/public 
       - ./resources:/app/resources
       - ./routes:/app/routes
       - ./storage:/app/storage

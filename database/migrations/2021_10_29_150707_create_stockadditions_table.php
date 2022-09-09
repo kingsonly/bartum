@@ -23,6 +23,12 @@ class CreateStockadditionsTable extends Migration
             $table->string('tracking')->nullable();
             $table->string('transactiontype')->default('addition')->comment('addition or sold');
             $table->string('projecttid')->nullable();
+            $table->string('price')->nullable();
+            $table->string('name')->nullable();
+            $table->string('capacity')->nullable();
+            $table->string('status')->nullable();
+            $table->string('rating')->nullable();
+            $table->string('stockid')->nullable();
         });
     }
 

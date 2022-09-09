@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubitemsTable extends Migration
+class ProductAccessories extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateSubitemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subitems', function (Blueprint $table) {
+        //
+        Schema::create('product_accessories', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('itemid');
-            $table->string('name');
-            $table->string('trashed')->default(0);
+            $table->string('product_id');
+            $table->integer('subitem_id');
             $table->integer('quantity')->default(0);
-            $table->string('userid')->nullable();
-            $table->string('referencenumber')->nullable();
-            $table->string('status');
-            $table->timestamp('deleted_at');
+            $table->integer('status')->nullable();
         });
     }
 
@@ -34,6 +31,7 @@ class CreateSubitemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subitems');
+        //
+        Schema::dropIfExists('product_accessories');
     }
 }

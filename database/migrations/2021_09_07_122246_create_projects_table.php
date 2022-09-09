@@ -33,12 +33,21 @@ class CreateProjectsTable extends Migration
             $table->string('lga')->nullable();
             $table->string('trashed')->nullable();
             $table->string('stateid')->nullable();
-            $table->decimal('price',12,2)->nullable();
+            $table->string('price')->nullable();
             $table->string('addedby')->nullable();
             $table->integer('numberofinverters')->nullable();
             $table->integer('batterytypeid')->nullable();
             $table->integer('invertertypeid')->nullable();
             $table->integer('solarpaneltypeid')->nullable();
+            $table->string('account_name')->nullable();
+            $table->string('mode_of_payment')->nullable();
+            $table->string('discount_value')->nullable();
+            $table->string('actual_amount')->nullable();
+            $table->string('account_number')->nullable();
+            $table->string('banks')->nullable();
+            $table->string('payment_status')->nullable();
+            $table->string('payment_duration')->nullable();
+            $table->timestamp('deleted_at')->nullable();
 
 
         });
