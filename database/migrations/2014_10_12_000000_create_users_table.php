@@ -23,8 +23,8 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->string('lastname')->nullable();;
             $table->string('reverse');
-            $table->string('passwordresetcode');
-            $table->string('emailresetcode');
+            $table->string('passwordresetcode')->nullable();
+            $table->string('emailresetcode')->nullable();
             $table->string('role')->nullable()->comment('1 for super admin, 2 for the other staff of bam that can edit and 3 for staff that view and 4 for clients');
         });
     }

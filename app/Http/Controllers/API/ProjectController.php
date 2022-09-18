@@ -1,5 +1,5 @@
 <?php
-
+//19
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
@@ -27,6 +27,7 @@ use App\Models\ProjectAddress;
 use App\Models\ProjectOrder;
 use App\Models\ProjectOrderDetails;
 use App\Models\ProjectMiscellaneous;
+use App\Models\Payment;
 
 
 
@@ -1167,4 +1168,83 @@ class ProjectController extends Controller
         }
         return response()->json(['status'=>'error', 'message'=>'We could not update the Longitude and Latitude', 'data'=>$projectModel],400);
     }
+    
+    /**
+     * this route would use the project id and enter a payment for the project, this is a project payment backdoor.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function backdoorPayment(Request $request, $id){
+        // request keys in json sample
+        // {
+        //     "amount":"233",
+        //     "actual_amount":"233",
+        //     "typeofpayment":"233",
+        //     "modeofpayment":"233",
+        //     "paymentduration":"233",
+
+        // }
+        // check to make sure project exist
+        $loggedinuser = auth()->guard('sanctum')->user();
+        if(empty($loggedinuser)){
+            return response()->json(['status'=>'error', 'message'=>'No user was logged in '],400);
+        }
+        if($loggedinuser->role !== 1){
+            return response()->json(['status'=>'error', 'message'=>'User does not have priv to call this route '],400);
+        }
+
+        $project = Project::where('id',$id)->first();
+        if(empty($project)){
+            return response()->json(['status'=>'error', 'message'=>'project does not exist'],400);
+        }
+
+        $validator = Validator::make($request->all(),[
+            'amount' => 'required',
+        ]);
+        if($validator->fails()){
+        return response()->json(['status' => 'error' , 'message'=>'all fields are required' , 'data'=>''],400);
+        }
+
+        // check all request data was validated
+
+        // proccess payment
+        $amountPaid = $request->input("amount");
+        $actualAmount = $request->input("actual_amount");
+        // get all payment and check if payment has been compleated 
+        $paymentModelPaySum = Payment::where("project_id",$id)->sum("amount");
+        if($amountPaid + $paymentModelPaySum >= $project->price){
+            $project->payment_status = 1;
+        }
+
+        $paymentModel = new Payment();
+        $paymentModel->project_id = $id;
+        $paymentModel->amount = $amountPaid;
+        $paymentModel->actual_amount = $actualAmount;
+        $paymentModel->order_id = 0;
+        $paymentModel->status = 1;
+        $paymentModel->type_of_payment = $request->typeofpayment;
+        
+            
+        if($paymentModel->save()){
+            if(empty($project->mode_of_payment) or empty($project->payment_duration) ){
+                $project->mode_of_payment = $request->modeofpayment;
+                $project->payment_duration = date('d/m/Y', strtotime('+'.$request->paymentduration.' months'));
+                $project->save();
+                $paymentModel["duration"] = $project->payment_duration;
+                $paymentModel["mode_of_payment"] = $project->mode_of_payment ;
+                return response()->json(['status'=>'success', 'message'=>"Payment was a success", 'data'=>$paymentModel],200);
+            }
+            return response()->json(['status'=>'success', 'message'=>"Payment was a success", 'data'=>$paymentModel],200);
+        }else{
+            return response()->json(['status'=>'error', 'message'=>"could not update Project payment status", 'data'=>$projectModel],400);
+        }
+        
+        
+    }
 }
+
+
+
+

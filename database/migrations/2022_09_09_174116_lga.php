@@ -14,8 +14,8 @@ class Lga extends Migration
     public function up()
     {
         //
-        Schema::create('lga', function (Blueprint $table) {
-            $table->increments('lgaid')->first();
+        Schema::create('lgas', function (Blueprint $table) {
+            $table->string('lgaid');
             $table->timestamps();
             $table->string('stateid');
             $table->integer('lganame');

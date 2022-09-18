@@ -29,6 +29,7 @@ class CreateProductsTable extends Migration
             $table->string('product_type')->nullable()->comment('userid of who added');
             $table->string('light_type')->nullable()->comment('userid of who added');
             $table->string('numberoflight')->nullable()->comment('userid of who added');
+            $table->string('batteries_type')->nullable()->comment('batteries_type to hold the subitem of a battery');
             $table->timestamp('deleted_at')->nullable();
         });
     }

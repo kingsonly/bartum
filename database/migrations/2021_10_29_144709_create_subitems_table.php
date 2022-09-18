@@ -23,7 +23,7 @@ class CreateSubitemsTable extends Migration
             $table->string('userid')->nullable();
             $table->string('referencenumber')->nullable();
             $table->string('status');
-            $table->timestamp('deleted_at');
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

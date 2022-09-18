@@ -12,16 +12,19 @@ services:
       # Re-use local composer cache via host-volume
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
       # Mount source-code for development
-      - ./app:/app/app
-      - ./bootstrap:/app/bootstrap
-      - ./config:/app/config
-      - ./database:/app/database
-      - ./public:/app/public 
-      - ./resources:/app/resources
-      - ./routes:/app/routes
-      - ./storage:/app/storage
-      - ./test:/app/test
-      - ./.env:/app/.env
+      # - ./app:/app/app
+      # - ./bootstrap:/app/bootstrap
+      # - ./config:/app/config
+      # - ./database:/app/database
+      # - ./public:/app/public 
+      # - ./resources:/app/resources
+      # - ./routes:/app/routes
+      # - ./storage:/app/storage
+      # - ./test:/app/test
+      # - ./tests:/app/tests
+      # - ./.env:/app/.env
+      #- ./vendor:/app/vendor
+      - ./:/app
     networks:
       - energyback
 
