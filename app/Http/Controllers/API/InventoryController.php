@@ -222,6 +222,7 @@ class InventoryController extends Controller
     $model->status = $request->input("status");
     $model->rating = $request->input("rating");
     $model->stockid = $request->input("stockid");
+
     if($model->save()){
       return response()->json(['status'=>'success', 'message'=>'Stock updated successfully', 'data'=>$model, ],200);
     }else{

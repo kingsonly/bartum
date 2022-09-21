@@ -190,19 +190,20 @@ class ProjectTest extends TestCase
             $response->assertOk();
         }
     }
+    
     public function test_if_user_has_access_to_enter_payment(){
        $this->userpriveCreate();
       
-            $params =[
-                "amount" => "233",
-                "actual_amount" => "233",
-                "typeofpayment" => "233",
-                "modeofpayment" => "233",
-                "paymentduration" => "233",
-            ]; 
-            $response = $this->postJson("/api/backdoorpayment/1",$params);
-        
-            $response->assertJsonFragment(['message'=>'User does not have priv to call this route ']);
+        $params =[
+            "amount" => "233",
+            "actual_amount" => "233",
+            "typeofpayment" => "233",
+            "modeofpayment" => "233",
+            "paymentduration" => "233",
+        ]; 
+        $response = $this->postJson("/api/backdoorpayment/1",$params);
+    
+        $response->assertJsonFragment(['message'=>'User does not have priv to call this route ']);
         
     }
 }
