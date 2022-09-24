@@ -19,7 +19,7 @@ class ProjectTest extends TestCase
     public function test_that_params_validation_works()
     {
         $this->userCreate();
-       
+        
         //Create a new project and then make a payment to the new project .
         $projectModel = new Project();
         $projectModel->projectname =  "1234";

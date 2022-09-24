@@ -2,6 +2,7 @@
 
 namespace Tests;
 use App\Models\User;
+use App\Models\Stockaddition;
 use Laravel\Sanctum\Sanctum;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -21,6 +22,11 @@ abstract class TestCase extends BaseTestCase
             User::factory()->notAnAdmin()->create(),
             ['*']
         );
+
+    }
+
+    public function inventoryCreate(){
+        return Stockaddition::factory()->create();
 
     }
 }

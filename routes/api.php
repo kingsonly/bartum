@@ -94,6 +94,7 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::post('updatestockreff', [InventoryController::class, 'updateProjectStock']);
     Route::post('updategeoaddress/{id}', [ProjectController::class, 'updateGeoAddress']);
     Route::post('backdoorpayment/{id}', [ProjectController::class, 'backdoorPayment']);
+    Route::patch('editbatchstock/{id}', [InventoryController::class, 'editBatchStock']);
 });
 
 Route::get('fetchitems', [InventoryController::class,'fetchitems']);
@@ -105,3 +106,4 @@ Route::post('viewinventory', [InventoryController::class, 'viewinventory']);
 Route::get('viewstockentries', [InventoryController::class, 'viewstockentries']);
 Route::get('fetchaudittrail', [InventoryController::class, 'fetchaudittrail']);
 Route::get('getsubitemsbyitemid/{id}', [InventoryController::class, 'getsubitemsbyitemid']);
+

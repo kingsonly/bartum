@@ -502,4 +502,58 @@ class InventoryController extends Controller
     }
   }
 
+  public function editBatchStock(Request $request ,Stockaddition $id){
+    
+    $loggedinuser = auth()->guard('sanctum')->user();
+    if($loggedinuser->role !== 1){
+        return response()->json(['status'=>'error', 'message'=>'Sorry you do not have access to make an edit to this document.'],400);
+    }
+
+    $itemId = Validator::make($request->all(),[
+      'itemid' => 'required',
+    ]);
+
+    $subItemId = Validator::make($request->all(),[
+      'subitemid' => 'required',
+    ]);
+
+    $price = Validator::make($request->all(),[
+      'price' => 'required',
+    ]);
+
+    $name = Validator::make($request->all(),[
+      'name' => 'required',
+    ]);
+
+    $capacity = Validator::make($request->all(),[
+      'capacity' => 'required',
+    ]);
+
+    $rating = Validator::make($request->all(),[
+      'rating' => 'required',
+    ]);
+
+    if(
+      $itemId->fails() || 
+      $subItemId->fails() ||
+      $price->fails() ||
+      $name->fails() ||
+      $capacity->fails() ||
+      $rating->fails() 
+      ){
+      return response()->json(['status' => 'error' , 'message' => 'all fieled must have a value' , 'data'=>''],400);
+    }
+
+    $model = Stockaddition::where("batch_number",$id->batch_number)->update($request->all());
+    if(!$model){
+      return response()->json(['status' => 'error' , 'message' => 'Update could not be made' , 'data'=>$model],400);
+    }
+    
+    return response()->json(['status' => 'error' , 'message' => 'all fieled must have a value' , 'data'=>$model],200);
+    
+
+
+    
+  }
+
 }

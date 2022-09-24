@@ -16,18 +16,15 @@ class CreateStockadditionsTable extends Migration
         Schema::create('stockadditions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('subitemid');
-            $table->integer('userid');
-            $table->integer('quantity')->default(0);
+            $table->integer('subitemid')->nullable();
+            $table->integer('userid')->nullable();
             $table->integer('itemid')->nullable();
-            $table->string('tracking')->nullable();
-            $table->string('transactiontype')->default('addition')->comment('addition or sold');
-            $table->string('projecttid')->nullable();
             $table->string('price')->nullable();
             $table->string('name')->nullable();
             $table->string('capacity')->nullable();
             $table->string('status')->nullable();
             $table->string('rating')->nullable();
+            $table->string('batch_number')->nullable();
             $table->string('stockid')->nullable();
         });
     }
