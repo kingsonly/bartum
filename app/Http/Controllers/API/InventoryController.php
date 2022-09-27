@@ -240,7 +240,7 @@ class InventoryController extends Controller
         $perpage = $query["perpage"];
     }
     else {
-      $perpage = 100;
+      $perpage = 10;
     }
 
     $query = $request->all();
