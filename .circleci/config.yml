@@ -89,7 +89,7 @@ jobs:
       - run:
           name: ssh login  
           command: |
-            rsync -va --delete app database vendor phpunit.xml storage artisan public/ .env tests bootstrap  composer.json  docker-compose.yml      resources    webpack.mix.js composer.lock  Dockerfile.dev routes config package.json	server.php bartumen@192.254.235.94:api.bartumenergy.com
+            rsync -va -e 'ssh -vvv -p 21098 -o StrictHostKeyChecking=no' --delete app database vendor phpunit.xml storage artisan public/ .env tests bootstrap  composer.json  docker-compose.yml      resources    webpack.mix.js composer.lock  Dockerfile.dev routes config package.json	server.php bartumen@192.254.235.94:api.bartumenergy.com
       # - run:
       #     name: ssh and run migration on live server  
       #     command: |

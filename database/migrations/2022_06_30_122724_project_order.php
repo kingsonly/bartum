@@ -20,6 +20,9 @@ class ProjectOrder extends Migration
             $table->string('order_description');
             $table->string('project_id');
             $table->string('client_id');
+            $table->string('address_id');
+            $table->string('amount');
+            $table->string('actual_amount');
             $table->integer('status');
         });
     }

@@ -45,7 +45,7 @@ class PaymentController extends Controller
 
     public function confirmPayment(Request $request,$id,$projectid){
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer sk_test_ba3673f03dce08fa0a3f8e362ed7baf529c3b68d' 
+            'Authorization' => 'Bearer sk_live_288984bd3b992e67d0836a2fd896cd3667af2f0b' 
         ])->get("https://api.paystack.co/transaction/verify/".$id);
         // payment is made to project total amount
   
@@ -113,7 +113,7 @@ class PaymentController extends Controller
         ];
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer sk_test_a81674220468d407c42fdd4291f225f590066c02' 
+            'Authorization' => 'Bearer sk_live_288984bd3b992e67d0836a2fd896cd3667af2f0b' 
         ])->post("https://api.paystack.co/customer",$data);
     
         if($response->object()->status == "success"){

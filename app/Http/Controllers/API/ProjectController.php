@@ -790,9 +790,49 @@ class ProjectController extends Controller
       $auditlog->object =  $object;
       $auditlog->save();
     }
+    
+    /**
+     * 
+     */
+    public function createProject(Request $request){
+        $loggedinuser = auth()->guard('sanctum')->user();
 
+        $projectNameValidator = Validator::make($request->all(),[
+            'projectName' => 'required',
+        ]);
 
-    public function createProject(Request $request)
+        $amountValidator = Validator::make($request->all(),[
+            'amount' => 'required',
+        ]);
+
+        $descriptionValidator = Validator::make($request->all(),[
+            'description' => "required",
+        ]);
+
+        $priceValidator = Validator::make($request->all(),[
+            "price" => "required",
+        ]);
+
+        $clientidValidator = Validator::make($request->all(),[
+            "clientid" => "required",
+        ]);
+
+        if(
+            $projectNameValidator->fails() 
+            or $projectNameValidator->fails()
+            or $amountValidator->fails()
+            or $descriptionValidator->fails()
+            or $priceValidator->fails()
+            or $clientidValidator->fails()
+       ){
+            return response()->json(['status' => 'error' , 'message'=>'You cant leave any field empty.'],400);
+        }
+
+        return response()->json(["status" =>'error','message'=>"good","data" => $request ],201);
+
+    }
+
+    public function createProjectWithProduct($request)
      {
         //check that the unique option which would determin if produn id is available
         if(!empty($request->input('productid'))){
@@ -1102,12 +1142,9 @@ class ProjectController extends Controller
                                 $model->save();
                             }
                         }
-                        
-    
                         // add and accessories to project , implement discount and also add vat to the implementation
                     }
-    
-    
+
                     $projectAmout +=  $orderAmount;
                     //$actualOrderAmount = $orderAmount;
                     $amountAfterDiscount = $orderAmount - ($orderAmount * $request->discount / 100);
@@ -1118,9 +1155,6 @@ class ProjectController extends Controller
     
                 }
 
-
-                
-                
                 $projectModel->actual_amount = $projectAmout;
                 $amountAfterDiscountProject = $projectAmout - ($projectAmout * $request->discount / 100);
                 $amountAfterVatProject = $amountAfterDiscountProject + ($amountAfterDiscountProject * 7.5 / 100);
@@ -1157,6 +1191,13 @@ class ProjectController extends Controller
 
 
     }//ends function
+    
+    /**
+     * 
+     */
+    public function createProjectWithStocks($request){
+
+    }
 
     public function updateGeoAddress(Request $request, $id){
         $model = ProjectAddress::where("id",$id)->first();
@@ -1170,7 +1211,7 @@ class ProjectController extends Controller
     }
     
     /**
-     * this route would use the project id and enter a payment for the project, this is a project payment backdoor.
+     * This route would use the project id and enter a payment for the project, this is a project payment backdoor.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  $id
@@ -1204,7 +1245,7 @@ class ProjectController extends Controller
             'amount' => 'required',
         ]);
         if($validator->fails()){
-        return response()->json(['status' => 'error' , 'message'=>'all fields are required' , 'data'=>''],400);
+            return response()->json(['status' => 'error' , 'message'=>'all fields are required' , 'data'=>''],400);
         }
 
         // check all request data was validated
@@ -1236,6 +1277,7 @@ class ProjectController extends Controller
                 $paymentModel["mode_of_payment"] = $project->mode_of_payment ;
                 return response()->json(['status'=>'success', 'message'=>"Payment was a success", 'data'=>$paymentModel],200);
             }
+
             return response()->json(['status'=>'success', 'message'=>"Payment was a success", 'data'=>$paymentModel],200);
         }else{
             return response()->json(['status'=>'error', 'message'=>"could not update Project payment status", 'data'=>$projectModel],400);

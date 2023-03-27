@@ -159,7 +159,7 @@ class ProjectTest extends TestCase
     }
 
     public function test_if_user_is_loggedin(){
-       $this->userCreate();
+        $this->userCreate();
         $projectModel = new Project();
         $projectModel->projectname =  "1234";
         $projectModel->projecttype =  "1234";
@@ -206,4 +206,27 @@ class ProjectTest extends TestCase
         $response->assertJsonFragment(['message'=>'User does not have priv to call this route ']);
         
     }
+
+    public function test_if_user_is_not_loggedin_when_creating_a_new_project(){
+        
+        $response = $this->postJson("/api/createproject/");
+    
+        $response->assertStatus(401)->assertJsonFragment(
+            [
+                "message" => "Unauthenticated."
+            ]);
+         
+     }
+
+    public function test_that_validation_of_request_data_is_functional_when_creating_a_new_project(){
+        $this->userCreate();
+        $data = [];
+        $this->postJson("/api/createproject/",$data)->assertStatus(400)->assertJsonFragment(
+            [
+                "message" => "You cant leave any field empty."
+            ]);
+         ;
+    }
+
+
 }

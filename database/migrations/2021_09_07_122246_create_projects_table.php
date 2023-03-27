@@ -36,9 +36,10 @@ class CreateProjectsTable extends Migration
             $table->string('price')->nullable();
             $table->string('addedby')->nullable();
             $table->integer('numberofinverters')->nullable();
-            $table->integer('batterytypeid')->nullable();
-            $table->integer('invertertypeid')->nullable();
-            $table->integer('solarpaneltypeid')->nullable();
+            $table->integer('type_of_payment')->nullable();
+            //$table->integer('batterytypeid')->nullable();
+            //$table->integer('invertertypeid')->nullable();
+            //$table->integer('solarpaneltypeid')->nullable();
             $table->string('account_name')->nullable();
             $table->string('mode_of_payment')->nullable();
             $table->string('discount_value')->nullable();
